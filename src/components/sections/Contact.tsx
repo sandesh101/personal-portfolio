@@ -3,12 +3,13 @@ import { motion } from "framer-motion";
 import { ArrowUpRight, Github, Linkedin, Mail } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { toast } from "sonner";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export function Contact() {
   const ref = useRef<HTMLElement>(null);
-  const [sent, setSent] = useState(false);
+  const [isSending, setIsSending] = useState(false);
 
   useEffect(() => {
     if (!ref.current) return;
@@ -30,18 +31,25 @@ export function Contact() {
       <div className="container-page">
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-20">
           <div className="lg:col-span-5">
-            <div data-c-reveal className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
+            <div
+              data-c-reveal
+              className="text-xs uppercase tracking-[0.3em] text-muted-foreground"
+            >
               07 — Contact
             </div>
             <h2
               data-c-reveal
               className="mt-6 font-display text-5xl md:text-6xl tracking-tight font-medium text-balance"
             >
-              Let's build something <span className="text-muted-foreground">meaningful.</span>
+              Let&apos;s build something{" "}
+              <span className="text-muted-foreground">meaningful.</span>
             </h2>
-            <div data-c-reveal className="mt-10 space-y-4 text-muted-foreground">
+            <div
+              data-c-reveal
+              className="mt-10 space-y-4 text-muted-foreground"
+            >
               <a
-                href="mailto:hello@sandeshrimal.dev"
+                href="mailto:rimal.sandesh11@gmail.com"
                 className="group flex items-center gap-3 text-foreground"
               >
                 <Mail className="h-4 w-4" /> rimal.sandesh11@gmail.com
@@ -79,19 +87,69 @@ export function Contact() {
 
           <form
             data-c-reveal
-            onSubmit={(e) => {
+            onSubmit={async (e) => {
               e.preventDefault();
-              setSent(true);
-              setTimeout(() => setSent(false), 3000);
-              (e.target as HTMLFormElement).reset();
+              const form = e.currentTarget;
+              const formData = new FormData(form);
+              formData.append("_subject", "Portfolio contact form");
+              formData.append("_captcha", "false");
+              formData.append("_template", "table");
+
+              setIsSending(true);
+
+              try {
+                const response = await fetch(
+                  "https://formsubmit.co/ajax/rimal.sandesh11@gmail.com",
+                  {
+                    method: "POST",
+                    headers: {
+                      Accept: "application/json",
+                    },
+                    body: formData,
+                  },
+                );
+
+                if (!response.ok) {
+                  throw new Error("Unable to send message");
+                }
+
+                form.reset();
+                toast.success("Email sent", {
+                  description: "Thanks for reaching out. I'll reply soon.",
+                  duration: 2500,
+                });
+              } catch {
+                toast.error("Message not sent", {
+                  description: "Please try again in a moment.",
+                  duration: 2500,
+                });
+              } finally {
+                setIsSending(false);
+              }
             }}
             className="lg:col-span-7 rounded-3xl border border-border bg-surface/40 backdrop-blur p-6 md:p-10 space-y-5"
           >
             <div className="grid md:grid-cols-2 gap-5">
               <Field label="Name" name="name" placeholder="Your name" />
-              <Field label="Email" name="email" type="email" placeholder="you@email.com" />
+              <Field
+                label="Email"
+                name="email"
+                type="email"
+                placeholder="you@email.com"
+              />
             </div>
-            <Field label="Subject" name="subject" placeholder="What's this about?" />
+            <Field
+              label="Subject"
+              name="subject"
+              placeholder="What's this about?"
+            />
+            <input
+              aria-hidden="true"
+              tabIndex={-1}
+              autoComplete="off"
+              name="company"
+              className="sr-only"
+            />
             <Field
               label="Message"
               name="message"
@@ -101,9 +159,10 @@ export function Contact() {
             <motion.button
               whileTap={{ scale: 0.98 }}
               type="submit"
-              className="group inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-6 py-3 text-sm font-medium hover-lift"
+              disabled={isSending}
+              className="group inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-6 py-3 text-sm font-medium hover-lift disabled:opacity-70 disabled:cursor-not-allowed"
             >
-              {sent ? "Message sent ✓" : "Send message"}
+              {isSending ? "Sending..." : "Send message"}
               <ArrowUpRight className="h-4 w-4 transition-transform group-hover:rotate-45" />
             </motion.button>
           </form>
@@ -127,9 +186,12 @@ function Field({
   multiline?: boolean;
 }) {
   const [focused, setFocused] = useState(false);
+
   return (
     <label className="block group">
-      <span className="text-xs uppercase tracking-[0.2em] text-muted-foreground">{label}</span>
+      <span className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
+        {label}
+      </span>
       <div className="relative mt-2">
         {multiline ? (
           <textarea

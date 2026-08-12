@@ -1,134 +1,510 @@
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { ArrowUpRight, Github, Linkedin, Mail, Youtube } from "lucide-react";
-import gsap from "gsap";
+import { ArrowUpRight, Github, Linkedin, Mail } from "lucide-react";
 
 const titles = ["Mobile Application Developer"];
 
+const ASCII_ROWS = 50;
+const ASCII_COLS = 72;
+const PX: number[] = [
+  178, 179, 178, 177, 176, 173, 168, 169, 167, 165, 167, 172, 173, 174, 172,
+  171, 172, 172, 171, 168, 166, 169, 171, 175, 179, 182, 183, 184, 183, 181,
+  179, 178, 179, 183, 188, 191, 190, 188, 187, 188, 188, 187, 185, 183, 180,
+  177, 174, 174, 174, 175, 174, 174, 174, 174, 174, 175, 177, 179, 178, 179,
+  182, 183, 181, 180, 178, 179, 181, 181, 180, 179, 174, 172, 180, 185, 187,
+  183, 179, 177, 179, 182, 183, 180, 177, 178, 179, 175, 174, 174, 177, 178,
+  177, 177, 178, 179, 181, 185, 187, 191, 189, 186, 184, 185, 186, 187, 184,
+  184, 189, 194, 198, 198, 196, 196, 198, 198, 194, 189, 185, 180, 178, 175,
+  175, 175, 177, 176, 176, 176, 177, 178, 179, 180, 180, 182, 184, 183, 184,
+  183, 181, 180, 180, 180, 182, 180, 176, 172, 187, 191, 193, 190, 188, 187,
+  187, 186, 185, 184, 184, 185, 184, 180, 177, 178, 180, 182, 181, 180, 180,
+  181, 184, 187, 189, 189, 189, 190, 191, 189, 188, 190, 191, 189, 190, 194,
+  198, 198, 196, 200, 202, 198, 195, 187, 181, 179, 179, 177, 176, 176, 178,
+  176, 176, 176, 177, 179, 180, 183, 183, 179, 178, 180, 184, 186, 185, 185,
+  185, 181, 175, 173, 176, 178, 188, 193, 197, 196, 192, 188, 186, 186, 188,
+  189, 190, 191, 187, 184, 184, 185, 186, 187, 187, 187, 186, 186, 188, 190,
+  191, 192, 194, 195, 198, 199, 197, 195, 197, 197, 199, 202, 201, 196, 196,
+  200, 202, 200, 196, 191, 187, 186, 184, 182, 182, 184, 183, 182, 182, 184,
+  185, 187, 189, 190, 190, 189, 187, 189, 189, 187, 189, 190, 186, 183, 179,
+  179, 182, 184, 185, 187, 189, 190, 188, 186, 185, 193, 199, 199, 195, 192,
+  193, 192, 191, 192, 193, 193, 195, 197, 200, 202, 203, 205, 207, 209, 210,
+  211, 211, 211, 214, 213, 214, 213, 212, 209, 207, 207, 202, 204, 207, 209,
+  208, 205, 203, 202, 200, 199, 198, 196, 196, 196, 197, 199, 201, 202, 201,
+  202, 201, 199, 200, 202, 199, 193, 190, 190, 188, 185, 184, 183, 180, 178,
+  185, 187, 188, 189, 192, 194, 196, 196, 196, 196, 198, 200, 200, 197, 195,
+  198, 204, 207, 211, 209, 207, 207, 213, 208, 199, 190, 193, 192, 202, 202,
+  183, 171, 160, 143, 124, 116, 141, 138, 144, 125, 122, 136, 164, 171, 185,
+  187, 193, 205, 210, 215, 210, 210, 208, 206, 207, 207, 208, 208, 206, 201,
+  201, 202, 198, 196, 196, 193, 190, 188, 187, 187, 187, 186, 181, 184, 185,
+  186, 189, 192, 196, 198, 198, 200, 202, 205, 206, 208, 208, 210, 216, 215,
+  185, 156, 127, 129, 132, 109, 114, 101, 104, 108, 116, 110, 113, 123, 134,
+  133, 130, 120, 106, 74, 88, 82, 77, 99, 100, 92, 103, 113, 141, 147, 140, 140,
+  147, 183, 201, 219, 220, 218, 215, 215, 211, 209, 211, 208, 203, 198, 194,
+  194, 196, 193, 188, 185, 186, 188, 182, 186, 186, 186, 188, 193, 196, 199,
+  201, 202, 203, 205, 209, 212, 219, 218, 194, 134, 119, 107, 96, 102, 100, 96,
+  114, 102, 93, 68, 57, 47, 45, 69, 88, 86, 84, 94, 113, 105, 114, 108, 98, 105,
+  119, 105, 96, 81, 71, 76, 104, 105, 96, 78, 93, 132, 191, 218, 214, 216, 225,
+  222, 219, 215, 209, 204, 200, 197, 195, 193, 191, 190, 188, 187, 184, 185,
+  188, 187, 188, 192, 195, 199, 201, 203, 205, 210, 216, 219, 200, 157, 128,
+  136, 132, 91, 71, 72, 51, 38, 22, 25, 41, 69, 129, 154, 153, 156, 140, 128,
+  126, 124, 137, 151, 153, 166, 162, 146, 148, 154, 151, 137, 143, 138, 148,
+  144, 143, 120, 111, 94, 91, 150, 170, 177, 176, 171, 175, 191, 212, 216, 207,
+  197, 189, 188, 188, 189, 189, 188, 187, 189, 192, 189, 187, 190, 198, 202,
+  201, 202, 213, 218, 209, 155, 108, 125, 134, 95, 51, 27, 22, 16, 43, 89, 108,
+  126, 149, 169, 147, 119, 108, 117, 138, 139, 110, 104, 103, 118, 143, 139,
+  159, 148, 129, 122, 130, 145, 164, 121, 111, 83, 84, 87, 79, 94, 90, 104, 143,
+  143, 151, 118, 112, 118, 152, 169, 209, 209, 200, 192, 189, 188, 186, 184,
+  187, 185, 188, 190, 193, 196, 202, 209, 214, 216, 214, 187, 95, 81, 106, 95,
+  66, 32, 25, 46, 104, 152, 160, 165, 176, 199, 185, 172, 154, 164, 166, 173,
+  148, 154, 164, 153, 119, 92, 48, 24, 22, 19, 27, 45, 55, 51, 68, 110, 127,
+  131, 127, 98, 66, 48, 45, 46, 59, 90, 85, 96, 32, 69, 96, 130, 148, 199, 206,
+  205, 204, 200, 198, 198, 189, 191, 194, 195, 196, 202, 209, 217, 216, 217,
+  149, 56, 45, 70, 45, 42, 39, 79, 117, 132, 117, 116, 133, 139, 131, 123, 129,
+  145, 156, 138, 123, 147, 135, 105, 71, 65, 60, 55, 56, 55, 39, 29, 30, 28, 24,
+  19, 29, 28, 40, 63, 70, 82, 92, 90, 96, 88, 55, 43, 73, 96, 97, 84, 86, 86,
+  97, 139, 200, 207, 213, 211, 208, 209, 197, 199, 200, 199, 203, 208, 216, 222,
+  206, 119, 52, 48, 48, 64, 101, 111, 113, 89, 81, 84, 135, 126, 94, 85, 94, 99,
+  97, 111, 104, 101, 77, 38, 33, 47, 56, 38, 50, 54, 51, 51, 74, 100, 95, 51,
+  28, 26, 49, 53, 35, 24, 33, 46, 65, 82, 84, 91, 122, 113, 88, 66, 50, 52, 60,
+  81, 82, 98, 149, 161, 224, 221, 216, 213, 203, 204, 204, 203, 206, 212, 219,
+  182, 108, 113, 122, 115, 141, 135, 131, 129, 135, 147, 150, 123, 84, 84, 105,
+  90, 49, 82, 78, 41, 51, 51, 36, 40, 52, 57, 80, 80, 85, 75, 109, 118, 134,
+  121, 81, 69, 50, 47, 37, 61, 74, 81, 69, 57, 48, 39, 60, 61, 53, 56, 65, 67,
+  64, 44, 25, 33, 47, 71, 84, 79, 163, 221, 227, 224, 207, 207, 207, 208, 210,
+  216, 185, 130, 123, 137, 128, 114, 130, 145, 162, 151, 136, 108, 67, 81, 86,
+  101, 116, 131, 147, 116, 105, 114, 107, 98, 76, 83, 68, 60, 56, 67, 80, 94,
+  119, 91, 72, 68, 42, 58, 59, 69, 83, 93, 61, 67, 56, 30, 26, 37, 22, 30, 34,
+  25, 21, 21, 31, 41, 42, 27, 36, 50, 110, 119, 131, 205, 234, 232, 211, 212,
+  215, 214, 215, 178, 136, 126, 75, 76, 57, 82, 105, 106, 98, 100, 74, 49, 49,
+  39, 60, 95, 107, 81, 88, 79, 70, 69, 67, 69, 90, 86, 61, 51, 42, 55, 93, 61,
+  40, 44, 48, 36, 52, 60, 81, 87, 70, 57, 49, 32, 28, 33, 32, 39, 28, 29, 37,
+  45, 33, 25, 42, 32, 56, 34, 56, 100, 151, 116, 149, 183, 229, 235, 215, 217,
+  215, 210, 159, 98, 76, 107, 112, 107, 123, 110, 90, 91, 82, 64, 32, 33, 34,
+  43, 80, 88, 79, 90, 68, 74, 56, 35, 49, 78, 42, 22, 30, 22, 26, 45, 37, 26,
+  38, 55, 33, 30, 25, 26, 34, 32, 32, 31, 32, 28, 25, 26, 26, 24, 37, 34, 30,
+  42, 43, 34, 41, 29, 46, 76, 87, 85, 83, 105, 143, 174, 214, 234, 218, 218,
+  216, 192, 75, 49, 80, 100, 92, 95, 75, 87, 95, 111, 112, 115, 107, 110, 125,
+  142, 126, 94, 59, 59, 47, 47, 62, 99, 112, 78, 35, 43, 62, 55, 35, 65, 84, 81,
+  97, 119, 103, 86, 74, 65, 65, 82, 93, 99, 81, 61, 52, 44, 48, 46, 47, 41, 44,
+  50, 34, 25, 35, 38, 41, 30, 47, 58, 88, 100, 110, 163, 219, 231, 217, 219,
+  222, 209, 122, 45, 35, 47, 41, 37, 51, 63, 84, 105, 94, 100, 86, 57, 65, 61,
+  43, 30, 16, 21, 42, 74, 92, 66, 51, 49, 54, 72, 91, 96, 101, 122, 124, 124,
+  133, 140, 143, 145, 141, 143, 148, 148, 144, 142, 139, 134, 126, 114, 103,
+  101, 97, 92, 99, 104, 94, 60, 23, 24, 28, 41, 63, 94, 79, 90, 109, 188, 230,
+  231, 214, 215, 215, 212, 155, 63, 64, 44, 67, 66, 30, 22, 44, 75, 68, 50, 28,
+  26, 34, 31, 34, 37, 37, 32, 36, 39, 35, 39, 62, 64, 44, 95, 117, 121, 128,
+  139, 147, 153, 160, 160, 159, 162, 162, 165, 162, 158, 159, 155, 153, 152,
+  149, 142, 141, 145, 148, 150, 155, 150, 126, 90, 39, 50, 42, 71, 61, 77, 83,
+  105, 140, 215, 230, 230, 211, 213, 215, 215, 198, 160, 63, 46, 43, 42, 66, 46,
+  64, 85, 78, 73, 53, 37, 40, 45, 48, 46, 26, 30, 43, 54, 45, 56, 54, 70, 109,
+  134, 143, 154, 157, 164, 175, 181, 182, 180, 183, 180, 185, 185, 194, 196,
+  193, 190, 191, 186, 181, 178, 175, 181, 182, 187, 186, 183, 154, 103, 62, 39,
+  40, 58, 63, 82, 85, 107, 174, 225, 228, 227, 213, 213, 213, 215, 217, 206,
+  136, 81, 64, 37, 53, 55, 38, 38, 37, 36, 25, 25, 51, 77, 91, 95, 92, 92, 88,
+  95, 104, 117, 143, 163, 184, 200, 203, 209, 213, 220, 217, 218, 212, 212, 215,
+  214, 224, 224, 227, 227, 224, 222, 224, 221, 217, 222, 224, 221, 220, 217,
+  211, 199, 179, 112, 52, 29, 19, 45, 45, 64, 80, 124, 204, 221, 222, 222, 209,
+  210, 212, 216, 217, 217, 213, 174, 68, 21, 26, 39, 56, 37, 44, 35, 26, 73,
+  107, 125, 140, 150, 168, 175, 172, 170, 169, 177, 186, 193, 205, 218, 221,
+  222, 225, 216, 214, 218, 215, 212, 200, 214, 219, 212, 213, 202, 196, 193,
+  179, 187, 184, 191, 198, 202, 216, 227, 230, 213, 187, 155, 91, 35, 22, 23,
+  25, 36, 70, 158, 219, 224, 222, 222, 207, 208, 211, 213, 213, 217, 221, 200,
+  100, 56, 58, 45, 60, 36, 75, 123, 142, 158, 160, 166, 182, 181, 147, 110, 88,
+  65, 48, 50, 50, 44, 57, 75, 76, 94, 137, 123, 150, 173, 178, 181, 159, 167,
+  166, 138, 111, 94, 56, 35, 25, 20, 26, 35, 42, 51, 68, 85, 120, 170, 195, 169,
+  147, 99, 27, 20, 33, 22, 59, 163, 225, 225, 223, 224, 202, 202, 207, 209, 210,
+  213, 220, 202, 98, 48, 35, 38, 51, 49, 160, 183, 176, 179, 184, 155, 115, 106,
+  110, 119, 117, 121, 125, 123, 108, 84, 72, 73, 75, 76, 93, 87, 97, 122, 146,
+  158, 145, 106, 85, 70, 58, 47, 38, 35, 43, 58, 81, 87, 97, 113, 102, 88, 82,
+  74, 89, 137, 165, 165, 102, 10, 44, 29, 51, 167, 225, 223, 220, 221, 200, 203,
+  208, 209, 210, 212, 217, 212, 131, 60, 52, 56, 37, 110, 189, 191, 180, 172,
+  149, 130, 148, 139, 106, 85, 65, 61, 48, 42, 34, 25, 46, 41, 42, 45, 48, 51,
+  87, 155, 191, 200, 181, 128, 69, 38, 31, 29, 21, 29, 14, 30, 31, 21, 39, 39,
+  49, 61, 83, 107, 101, 112, 141, 158, 155, 45, 46, 20, 75, 192, 226, 224, 222,
+  221, 199, 201, 201, 203, 205, 210, 214, 195, 106, 101, 81, 52, 58, 154, 192,
+  189, 184, 170, 150, 137, 101, 74, 61, 58, 59, 80, 50, 53, 65, 66, 90, 64, 55,
+  60, 65, 77, 106, 147, 202, 218, 210, 150, 84, 44, 38, 40, 44, 66, 55, 51, 52,
+  46, 85, 59, 33, 41, 44, 63, 86, 112, 138, 155, 154, 79, 39, 55, 100, 147, 225,
+  226, 226, 225, 198, 199, 199, 198, 203, 209, 218, 160, 109, 167, 184, 73, 48,
+  142, 175, 200, 206, 197, 180, 166, 151, 131, 112, 92, 81, 73, 66, 67, 70, 74,
+  83, 103, 118, 121, 121, 133, 139, 173, 206, 223, 221, 196, 129, 91, 81, 83,
+  80, 76, 70, 72, 78, 83, 75, 71, 66, 81, 116, 146, 156, 179, 193, 186, 151, 78,
+  78, 168, 116, 108, 191, 222, 219, 219, 196, 199, 201, 199, 200, 205, 209, 132,
+  166, 175, 116, 63, 39, 132, 183, 209, 216, 212, 207, 201, 190, 182, 172, 154,
+  138, 132, 134, 142, 153, 168, 184, 190, 184, 165, 171, 159, 164, 193, 223,
+  238, 233, 222, 184, 138, 115, 121, 148, 164, 163, 159, 149, 136, 133, 142,
+  163, 186, 199, 209, 208, 196, 178, 162, 159, 84, 64, 139, 170, 115, 174, 220,
+  220, 221, 197, 197, 196, 196, 195, 199, 208, 189, 190, 131, 96, 134, 84, 140,
+  198, 196, 195, 192, 187, 200, 218, 230, 236, 237, 231, 228, 221, 218, 220,
+  225, 224, 208, 181, 157, 170, 200, 227, 232, 236, 239, 233, 232, 227, 193,
+  146, 109, 138, 193, 219, 232, 232, 237, 234, 240, 242, 237, 232, 214, 191,
+  174, 167, 156, 158, 107, 57, 86, 152, 157, 212, 222, 220, 220, 200, 199, 198,
+  197, 198, 203, 209, 219, 182, 176, 185, 148, 103, 119, 172, 193, 190, 200,
+  206, 225, 235, 238, 235, 233, 224, 221, 214, 215, 214, 198, 173, 146, 123,
+  186, 217, 232, 235, 238, 233, 223, 216, 203, 197, 187, 196, 192, 117, 133,
+  178, 218, 232, 234, 233, 239, 235, 232, 233, 225, 208, 187, 154, 155, 154,
+  106, 71, 138, 164, 181, 223, 222, 218, 216, 202, 202, 200, 199, 199, 203, 210,
+  212, 185, 184, 206, 155, 78, 90, 155, 187, 185, 193, 203, 217, 210, 206, 203,
+  203, 198, 204, 195, 179, 162, 131, 115, 133, 166, 231, 222, 196, 179, 192,
+  191, 183, 173, 164, 149, 141, 165, 194, 178, 119, 136, 175, 207, 214, 216,
+  211, 211, 213, 210, 208, 204, 183, 159, 142, 149, 79, 98, 189, 159, 178, 224,
+  221, 216, 214, 202, 201, 199, 197, 197, 202, 208, 216, 234, 223, 214, 146, 65,
+  73, 127, 168, 157, 177, 186, 192, 182, 187, 194, 196, 187, 178, 157, 127, 93,
+  96, 141, 164, 170, 162, 111, 64, 63, 113, 146, 149, 136, 102, 74, 56, 90, 127,
+  141, 128, 107, 117, 165, 199, 209, 210, 208, 197, 194, 188, 184, 158, 156,
+  143, 124, 61, 102, 178, 198, 197, 224, 219, 215, 214, 198, 198, 198, 195, 193,
+  198, 204, 213, 209, 177, 193, 159, 56, 57, 90, 127, 118, 133, 167, 158, 161,
+  171, 167, 158, 158, 135, 107, 86, 111, 114, 125, 104, 75, 40, 20, 15, 23, 44,
+  54, 79, 65, 46, 20, 6, 13, 34, 67, 115, 129, 109, 107, 145, 186, 209, 198,
+  185, 182, 158, 163, 140, 136, 124, 79, 34, 126, 181, 176, 195, 220, 216, 215,
+  216, 193, 191, 191, 192, 194, 198, 204, 210, 215, 200, 171, 149, 61, 43, 63,
+  109, 95, 113, 116, 112, 134, 139, 122, 137, 146, 127, 90, 72, 34, 35, 67, 84,
+  104, 74, 76, 88, 81, 91, 104, 113, 90, 73, 73, 69, 49, 37, 28, 43, 36, 54, 79,
+  101, 153, 186, 191, 180, 167, 140, 137, 118, 80, 81, 44, 44, 109, 147, 179,
+  218, 213, 209, 207, 207, 191, 189, 192, 195, 195, 196, 199, 206, 214, 220,
+  224, 216, 94, 44, 75, 81, 85, 110, 104, 112, 91, 118, 117, 159, 197, 133, 48,
+  31, 30, 53, 76, 96, 105, 120, 130, 133, 139, 149, 144, 138, 128, 133, 127,
+  119, 112, 99, 86, 72, 65, 38, 29, 67, 173, 205, 197, 178, 148, 125, 103, 94,
+  55, 54, 34, 90, 217, 218, 213, 210, 208, 208, 207, 207, 193, 193, 193, 192,
+  191, 194, 200, 206, 212, 217, 221, 221, 126, 39, 49, 46, 79, 111, 114, 117,
+  94, 122, 149, 172, 187, 139, 58, 40, 42, 109, 138, 159, 179, 197, 232, 242,
+  242, 230, 212, 207, 214, 209, 190, 150, 118, 115, 104, 103, 86, 45, 46, 72,
+  181, 189, 169, 142, 114, 102, 92, 78, 50, 39, 38, 166, 218, 217, 212, 207,
+  205, 206, 207, 208, 192, 192, 192, 190, 190, 195, 199, 203, 209, 215, 219,
+  221, 183, 77, 26, 38, 54, 84, 85, 90, 106, 99, 119, 149, 128, 151, 84, 44, 94,
+  158, 213, 237, 239, 232, 230, 221, 209, 211, 216, 218, 212, 210, 213, 206,
+  214, 216, 209, 186, 144, 73, 86, 131, 158, 149, 132, 113, 85, 87, 76, 60, 48,
+  36, 123, 215, 219, 214, 209, 204, 202, 202, 203, 202, 194, 194, 195, 196, 192,
+  196, 200, 204, 206, 210, 214, 217, 214, 130, 35, 27, 35, 68, 66, 66, 81, 93,
+  111, 131, 118, 100, 60, 68, 121, 173, 199, 211, 226, 222, 198, 173, 142, 116,
+  115, 116, 135, 166, 180, 206, 224, 219, 197, 193, 160, 95, 84, 124, 138, 109,
+  110, 104, 97, 90, 90, 53, 30, 74, 192, 220, 218, 213, 208, 203, 203, 204, 206,
+  207, 194, 194, 195, 193, 194, 197, 198, 198, 199, 204, 208, 210, 212, 195,
+  100, 36, 20, 48, 76, 57, 73, 95, 110, 114, 90, 78, 63, 82, 120, 151, 202, 228,
+  222, 215, 210, 191, 163, 130, 113, 110, 117, 133, 147, 170, 200, 205, 194,
+  187, 148, 83, 70, 105, 111, 100, 102, 83, 86, 68, 45, 28, 68, 187, 214, 212,
+  209, 206, 204, 198, 196, 198, 202, 204, 195, 193, 193, 194, 194, 194, 196,
+  199, 200, 201, 201, 205, 208, 209, 190, 92, 39, 34, 53, 55, 83, 97, 92, 52,
+  63, 83, 68, 107, 115, 155, 198, 240, 231, 229, 206, 170, 185, 180, 182, 163,
+  151, 162, 193, 228, 238, 236, 223, 178, 143, 97, 65, 52, 64, 70, 80, 61, 56,
+  33, 29, 67, 173, 208, 212, 210, 207, 204, 198, 195, 194, 197, 199, 200, 200,
+  198, 197, 197, 197, 197, 199, 201, 202, 203, 205, 207, 206, 195, 207, 174,
+  117, 47, 32, 31, 41, 70, 49, 35, 37, 40, 57, 88, 131, 153, 171, 164, 135, 126,
+  119, 113, 119, 113, 128, 110, 105, 122, 138, 151, 158, 177, 200, 176, 133, 93,
+  54, 46, 38, 45, 54, 27, 17, 22, 67, 164, 227, 194, 205, 203, 202, 202, 201,
+  200, 200, 202, 201, 200, 201, 202, 200, 199, 198, 199, 201, 202, 201, 203,
+  206, 208, 170, 108, 238, 206, 170, 142, 72, 26, 33, 44, 40, 27, 34, 35, 33,
+  57, 79, 97, 97, 101, 76, 56, 60, 62, 64, 52, 51, 63, 66, 81, 74, 75, 76, 83,
+  112, 101, 75, 44, 32, 28, 35, 38, 19, 23, 31, 93, 154, 192, 242, 136, 143,
+  194, 206, 207, 205, 203, 203, 204, 204, 203, 204, 206, 208, 208, 209, 210,
+  208, 207, 205, 205, 186, 143, 101, 121, 249, 234, 184, 177, 163, 108, 44, 24,
+  48, 50, 32, 20, 16, 26, 49, 46, 52, 51, 40, 30, 19, 28, 30, 37, 32, 33, 31,
+  23, 24, 34, 43, 61, 48, 33, 31, 33, 25, 24, 16, 20, 18, 56, 119, 153, 163,
+  223, 236, 199, 76, 99, 152, 200, 212, 211, 210, 209, 208, 204, 211, 211, 213,
+  214, 217, 216, 215, 202, 173, 140, 126, 110, 71, 139, 244, 248, 210, 171, 184,
+  168, 115, 73, 33, 36, 29, 15, 22, 15, 37, 44, 35, 26, 24, 32, 38, 27, 26, 22,
+  22, 18, 14, 23, 30, 32, 42, 32, 30, 29, 22, 28, 32, 18, 15, 47, 96, 147, 157,
+  150, 192, 239, 227, 224, 62, 74, 84, 100, 142, 185, 214, 216, 213, 211, 219,
+  219, 210, 194, 187, 173, 147, 126, 120, 115, 101, 87, 52, 111, 235, 243, 240,
+  198, 140, 171, 184, 169, 115, 68, 49, 32, 32, 21, 26, 29, 16, 31, 33, 32, 32,
+  25, 21, 17, 18, 16, 19, 34, 29, 30, 20, 28, 23, 29, 29, 23, 28, 52, 96, 135,
+  155, 155, 128, 165, 234, 229, 212, 215, 50, 60, 72, 81, 87, 97, 118, 149, 182,
+  200, 133, 100, 80, 119, 132, 115, 112, 104, 105, 103, 87, 82, 49, 64, 216,
+  234, 241, 239, 194, 102, 132, 164, 176, 161, 124, 79, 55, 35, 35, 30, 23, 26,
+  25, 21, 25, 27, 30, 22, 26, 27, 24, 21, 27, 26, 26, 29, 26, 29, 50, 72, 109,
+  139, 151, 154, 130, 94, 153, 223, 233, 206, 205, 173, 38, 54, 61, 64, 72, 82,
+  85, 94, 109, 123, 40, 77, 112, 109, 106, 107, 109, 114, 108, 97, 88, 75, 41,
+  24, 181, 222, 232, 240, 234, 206, 108, 91, 124, 154, 167, 170, 156, 123, 102,
+  82, 72, 69, 61, 53, 43, 45, 38, 31, 27, 33, 37, 44, 52, 57, 61, 75, 88, 106,
+  132, 150, 165, 164, 149, 111, 81, 157, 223, 238, 215, 193, 201, 100, 30, 52,
+  62, 65, 73, 81, 87, 93, 94, 103, 88, 107, 90, 91, 94, 105, 108, 106, 106, 87,
+  60, 49, 44, 24, 124, 210, 224, 235, 243, 238, 219, 150, 82, 108, 134, 151,
+  165, 170, 166, 158, 146, 138, 128, 128, 122, 115, 116, 113, 120, 117, 110,
+  114, 116, 125, 131, 144, 153, 164, 181, 186, 172, 145, 109, 94, 174, 227, 244,
+  233, 197, 206, 193, 55, 24, 36, 51, 62, 70, 76, 82, 87, 89, 90, 103, 76, 80,
+  82, 91, 99, 100, 82, 57, 44, 50, 52, 41, 33, 78, 200, 222, 233, 241, 248, 244,
+  228, 194, 116, 96, 117, 138, 153, 162, 172, 168, 170, 178, 175, 172, 169, 169,
+  171, 167, 170, 171, 172, 178, 176, 175, 180, 190, 194, 192, 178, 144, 107,
+  134, 203, 235, 248, 242, 217, 194, 214, 167, 26, 31, 37, 40, 44, 58, 76, 80,
+  84, 87, 86,
+];
+
+// Characters from darkest (dense) to brightest (sparse)
+const CHARS = "@#%&Wmqpdbkhaoeusnzxrfjt/\\|()1{}[]?-_+~<>i!lI;:,\"'`. ";
+
 export function Hero() {
-  const rotatorRef = useRef<HTMLSpanElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const preRef = useRef<HTMLPreElement>(null);
+  const mouseRef = useRef<{ x: number; y: number }>({ x: -9999, y: -9999 });
+  const stateRef = useRef({
+    revealedRows: -1,
+    glitching: false,
+    bootDone: false,
+    // per-character breathing offsets (random phase per char)
+    breathPhase: [] as number[],
+    scanTimer: 0 as unknown as ReturnType<typeof setInterval>,
+    bootTimer: 0 as unknown as ReturnType<typeof setInterval>,
+    rafId: 0,
+    lastBreath: 0,
+  });
 
   useEffect(() => {
-    const el = rotatorRef.current;
-    if (!el) return;
-    let i = 0;
-    const tl = gsap.timeline({ repeat: -1 });
-    titles.forEach(() => {
-      tl.to(el, {
-        duration: 0,
-        onStart: () => {
-          el.textContent = titles[i % titles.length];
-        },
-      })
-        .fromTo(
-          el,
-          { yPercent: 100, opacity: 0 },
-          { yPercent: 0, opacity: 1, duration: 0.6, ease: "power3.out" },
-        )
-        .to({}, { duration: 2.2 })
-        .to(el, {
-          yPercent: -100,
-          opacity: 0,
-          duration: 0.5,
-          ease: "power3.in",
-          onComplete: () => i++,
-        });
-    });
+    const pre = preRef.current;
+    const container = containerRef.current;
+    if (!pre || !container) return;
+    const s = stateRef.current;
+
+    // Assign a random phase offset per character for breathing
+    s.breathPhase = Array.from(
+      { length: ASCII_ROWS * ASCII_COLS },
+      () => Math.random() * Math.PI * 2,
+    );
+
+    // ── helpers ─────────────────────────────────────────────
+    function charFor(b: number): string {
+      const idx = Math.floor((1 - b / 255) * (CHARS.length - 1));
+      return CHARS[Math.max(0, Math.min(CHARS.length - 1, idx))];
+    }
+
+    function charForBrightness(b: number): string {
+      // clamp brightness 0-255
+      return charFor(Math.max(0, Math.min(255, b)));
+    }
+
+    // ── boot-up: reveal row by row ───────────────────────────
+    function renderBoot(revealed: number) {
+      let out = "";
+      for (let r = 0; r < ASCII_ROWS; r++) {
+        for (let c = 0; c < ASCII_COLS; c++) {
+          out += r > revealed ? " " : charFor(PX[r * ASCII_COLS + c]);
+        }
+        out += "\n";
+      }
+      pre!.textContent = out;
+    }
+
+    renderBoot(-1);
+    s.bootTimer = setInterval(() => {
+      s.revealedRows++;
+      renderBoot(s.revealedRows);
+      if (s.revealedRows >= ASCII_ROWS - 1) {
+        clearInterval(s.bootTimer);
+        s.bootDone = true;
+        startLiveRender();
+      }
+    }, 32);
+
+    // ── live render: breathing + flashlight ─────────────────
+    function startLiveRender() {
+      let t = 0;
+
+      function frame() {
+        t += 0.018; // breathing speed
+        const mx = mouseRef.current.x;
+        const my = mouseRef.current.y;
+
+        // Measure character cell size from the pre element
+        const preRect = pre!.getBoundingClientRect();
+        const cellW = preRect.width / ASCII_COLS;
+        const cellH = preRect.height / ASCII_ROWS;
+
+        // Flashlight radius in pixels
+        const FLASH_RADIUS = 90;
+        const FLASH_BOOST = 90; // max brightness boost at center
+        const BREATH_AMP = 18; // max brightness swing from breathing
+
+        let out = "";
+        for (let r = 0; r < ASCII_ROWS; r++) {
+          for (let c = 0; c < ASCII_COLS; c++) {
+            const idx = r * ASCII_COLS + c;
+            let b = PX[idx];
+
+            // 1. Breathing: sine wave per character, slow & gentle
+            const breath =
+              Math.sin(t + s.breathPhase[idx]) * BREATH_AMP * (1 - b / 255); // darker chars breathe more
+            b = b + breath;
+
+            // 2. Cursor flashlight: brighten chars near the cursor
+            if (mx > -100) {
+              // character center in page coords
+              const charX = preRect.left + (c + 0.5) * cellW;
+              const charY = preRect.top + (r + 0.5) * cellH;
+              const dx = charX - mx;
+              const dy = charY - my;
+              const dist = Math.sqrt(dx * dx + dy * dy);
+              if (dist < FLASH_RADIUS) {
+                const strength = 1 - dist / FLASH_RADIUS;
+                // flashlight brightens the pixel (increases b = makes char sparser/lighter)
+                b = b + strength * FLASH_BOOST;
+              }
+            }
+
+            out += charForBrightness(b);
+          }
+          out += "\n";
+        }
+        pre!.textContent = out;
+        s.rafId = requestAnimationFrame(frame);
+      }
+
+      s.rafId = requestAnimationFrame(frame);
+    }
+
+    // ── mouse tracking ───────────────────────────────────────
+    function onMouseMove(e: MouseEvent) {
+      mouseRef.current = { x: e.clientX, y: e.clientY };
+    }
+    function onMouseLeave() {
+      mouseRef.current = { x: -9999, y: -9999 };
+    }
+
+    // Track on window so flashlight works as cursor enters from anywhere
+    window.addEventListener("mousemove", onMouseMove);
+    container.addEventListener("mouseleave", onMouseLeave);
+
     return () => {
-      tl.kill();
+      clearInterval(s.bootTimer);
+      clearInterval(s.scanTimer);
+      cancelAnimationFrame(s.rafId);
+      window.removeEventListener("mousemove", onMouseMove);
+      container.removeEventListener("mouseleave", onMouseLeave);
     };
   }, []);
 
   return (
-    <section id="home" className="relative min-h-[100svh] flex items-center pt-24 overflow-hidden">
+    <section
+      id="home"
+      className="relative min-h-[100svh] flex items-center pt-24 overflow-hidden"
+    >
       {/* background */}
       <div className="absolute inset-0 bg-grid bg-grid-fade" />
       <div className="blob bg-white/10 w-[500px] h-[500px] -top-32 -left-32" />
       <div className="blob bg-white/5 w-[600px] h-[600px] -bottom-40 -right-40" />
 
-      <div className="container-page relative">
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.7, duration: 0.6 }}
-          className="inline-flex items-center gap-2 rounded-full border border-border bg-surface/60 backdrop-blur px-3 py-1.5 text-xs text-muted-foreground"
-        >
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inset-0 rounded-full bg-emerald-400 pulse-dot" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
-          </span>
-          Available for freelance &amp; collaborations
-        </motion.div>
+      <div className="container-page relative flex items-center gap-12 w-full">
+        {/* Left: text */}
+        <div className="flex-1">
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.7, duration: 0.6 }}
+            className="inline-flex items-center gap-2 rounded-full border border-border bg-surface/60 backdrop-blur px-3 py-1.5 text-xs text-muted-foreground"
+          >
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inset-0 rounded-full bg-emerald-400 pulse-dot" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+            </span>
+            Available for freelance &amp; collaborations
+          </motion.div>
 
-        <h1 className="mt-8 font-display font-medium tracking-[-0.04em] text-balance text-[clamp(2.75rem,9vw,7.5rem)] leading-[0.95]">
-          <SplitLine delay={1.85}>Sandesh</SplitLine>
-          <SplitLine delay={2.0} className="text-muted-foreground">
-            Rimal.
-          </SplitLine>
-        </h1>
+          <h1 className="mt-8 font-display font-medium tracking-[-0.04em] text-balance text-[clamp(2.75rem,9vw,7.5rem)] leading-[0.95]">
+            <SplitLine delay={1.85}>Sandesh</SplitLine>
+            <SplitLine delay={2.0} className="text-muted-foreground">
+              Rimal.
+            </SplitLine>
+          </h1>
 
-        <div className="mt-8 flex items-center gap-3 text-base md:text-lg text-muted-foreground">
-          <span className="h-px w-10 bg-red-500" />
-          <span className="relative inline-block h-[1.6em] overflow-hidden">
-            {/* <span ref={rotatorRef} className="inline-block text-foreground font-medium">
+          <div className="mt-8 flex items-center gap-3 text-base md:text-lg text-muted-foreground">
+            <span className="h-px w-10 bg-red-500" />
+            <span className="inline-block text-foreground font-medium">
               {titles[0]}
-            </span> */}
-            <span className="inline-block text-foreground font-medium">{titles[0]}</span>
-          </span>
+            </span>
+          </div>
+
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 2.2, duration: 0.6 }}
+            className="mt-8 max-w-xl text-base md:text-lg text-muted-foreground text-balance"
+          >
+            I build scalable mobile and web applications with modern
+            technologies and clean user experiences.
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 2.35, duration: 0.6 }}
+            className="mt-10 flex flex-wrap items-center gap-3"
+          >
+            <a
+              href="#work"
+              className="group inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-5 py-3 text-sm font-medium hover-lift"
+            >
+              View Projects
+              <ArrowUpRight className="h-4 w-4 transition-transform group-hover:rotate-45" />
+            </a>
+            <a
+              href="#contact"
+              className="inline-flex items-center gap-2 rounded-full border border-border bg-surface/60 backdrop-blur px-5 py-3 text-sm font-medium hover:bg-secondary transition-colors"
+            >
+              Contact Me
+            </a>
+
+            <div className="ml-auto hidden md:flex items-center gap-1">
+              {[
+                {
+                  Icon: Github,
+                  href: "https://github.com/sandesh101",
+                  label: "GitHub",
+                },
+                {
+                  Icon: Linkedin,
+                  href: "https://www.linkedin.com/in/sandesh-rimal/",
+                  label: "LinkedIn",
+                },
+                {
+                  Icon: Mail,
+                  href: "mailto:rimal.sandesh11@gmail.com",
+                  label: "Email",
+                },
+              ].map(({ Icon, href, label }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={label}
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border text-muted-foreground hover:text-foreground hover:bg-secondary transition-all"
+                >
+                  <Icon className="h-4 w-4" />
+                </a>
+              ))}
+            </div>
+          </motion.div>
         </div>
 
-        <motion.p
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 2.2, duration: 0.6 }}
-          className="mt-8 max-w-xl text-base md:text-lg text-muted-foreground text-balance"
-        >
-          I build scalable mobile and web applications with modern technologies and clean user
-          experiences.
-        </motion.p>
-
+        {/* Right: ASCII portrait */}
         <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 2.35, duration: 0.6 }}
-          className="mt-10 flex flex-wrap items-center gap-3"
+          ref={containerRef}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.9, duration: 0.8 }}
+          className="hidden md:flex flex-col items-start flex-shrink-0 relative select-none"
+          style={{ cursor: "crosshair" }}
         >
-          <a
-            href="#work"
-            className="group inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-5 py-3 text-sm font-medium hover-lift"
-          >
-            View Projects
-            <ArrowUpRight className="h-4 w-4 transition-transform group-hover:rotate-45" />
-          </a>
-          <a
-            href="#contact"
-            className="inline-flex items-center gap-2 rounded-full border border-border bg-surface/60 backdrop-blur px-5 py-3 text-sm font-medium hover:bg-secondary transition-colors"
-          >
-            Contact Me
-          </a>
-
-          <div className="ml-auto hidden md:flex items-center gap-1">
-            {[
-              { Icon: Github, href: "https://github.com/sandesh101", label: "GitHub" },
-              {
-                Icon: Linkedin,
-                href: "https://www.linkedin.com/in/sandesh-rimal/",
-                label: "LinkedIn",
-              },
-              { Icon: Mail, href: "mailto:rimal.sandesh11@gmail.com", label: "Email" },
-            ].map(({ Icon, href, label }) => (
-              <a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noreferrer"
-                aria-label={label}
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border text-muted-foreground hover:text-foreground hover:bg-secondary transition-all"
-              >
-                <Icon className="h-4 w-4" />
-              </a>
-            ))}
-          </div>
+          {/* CRT scanline overlay */}
+          {/* <div
+            className="absolute inset-0 pointer-events-none z-10"
+            style={{
+              background:
+                "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.06) 2px, rgba(0,0,0,0.06) 4px)",
+            }}
+          /> */}
+          <pre
+            ref={preRef}
+            style={{
+              fontFamily: '"Courier New", Courier, monospace',
+              fontSize: "8.2px",
+              lineHeight: "1.28",
+              letterSpacing: "0.06em",
+              color: "rgba(255,255,255,0.82)",
+              margin: 0,
+              padding: 0,
+              whiteSpace: "pre",
+              userSelect: "none",
+            }}
+          />
         </motion.div>
       </div>
 

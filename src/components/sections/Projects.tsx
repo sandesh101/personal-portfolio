@@ -6,7 +6,26 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const projects = [
+type Project = {
+  title: string;
+  year: string;
+  description: string;
+  stack: string[];
+  accent: string;
+  link?: string;
+  repo?: string;
+};
+
+const projects: Project[] = [
+  {
+    title: "Chynabazar",
+    year: "2026",
+    description:
+      "ChinaBazar is a comprehensive e-commerce platform (modular monolith) with NestJS backend, Next.js web, and Flutter mobile apps for consumers and warehouse operations, covering shopping, payments, notifications, SKU/inventory management, and ERP integration.",
+    stack: ["Nest Js", "TypeScript", "Flutter", "Bloc"],
+    accent: "from-sky-200 to-indigo-500",
+    link: "https://chynabazar.com",
+  },
   {
     title: "Express Postman Collection Generator",
     year: "2026",
@@ -40,14 +59,14 @@ const projects = [
     stack: ["React", "GSAP", "Lenis", "Tailwind"],
     accent: "from-neutral-100 to-neutral-400",
   },
-  {
-    title: "MERN API Suite",
-    year: "2024",
-    description:
-      "Production-ready REST API templates with JWT auth, role-based access, rate limiting and clean controller/service architecture.",
-    stack: ["Node.js", "Express", "MongoDB", "JWT"],
-    accent: "from-neutral-400 to-neutral-700",
-  },
+  // {
+  //   title: "MERN API Suite",
+  //   year: "2024",
+  //   description:
+  //     "Production-ready REST API templates with JWT auth, role-based access, rate limiting and clean controller/service architecture.",
+  //   stack: ["Node.js", "Express", "MongoDB", "JWT"],
+  //   accent: "from-neutral-400 to-neutral-700",
+  // },
 ];
 
 export function Projects() {
@@ -58,11 +77,12 @@ export function Projects() {
     const ctx = gsap.context(() => {
       gsap.utils.toArray<HTMLElement>("[data-project]").forEach((el) => {
         gsap.from(el, {
-          y: 80,
+          y: 60,
           opacity: 0,
-          duration: 1,
+          scale: 0.98,
+          duration: 0.8,
           ease: "power3.out",
-          scrollTrigger: { trigger: el, start: "top 80%" },
+          scrollTrigger: { trigger: el, start: "top 85%" },
         });
 
         const visual = el.querySelector<HTMLElement>("[data-parallax]");
@@ -105,17 +125,18 @@ export function Projects() {
           </a>
         </div>
 
-        <div className="space-y-6">
+        <div className="flex flex-col">
           {projects.map((p, i) => (
             <article
               key={p.title}
               data-project
-              className="group relative grid lg:grid-cols-12 gap-6 lg:gap-10 rounded-3xl border border-border bg-surface/40 backdrop-blur p-6 lg:p-8 hover-lift hover:border-foreground/30 overflow-hidden"
+              style={{ zIndex: i + 1 }}
+              className="group sticky top-24 md:top-28 z-0 grid lg:grid-cols-12 gap-6 lg:gap-10 rounded-3xl border border-border bg-surface/90 backdrop-blur p-6 lg:p-8 hover-lift hover:border-foreground/30 overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.08)] mt-4 first:mt-0"
             >
-              <div className="lg:col-span-5 relative aspect-[4/3] lg:aspect-auto rounded-2xl border border-border overflow-hidden bg-background">
+              <div className="lg:col-span-5 relative aspect-4/3 lg:aspect-auto rounded-2xl border border-border overflow-hidden bg-background">
                 <div
                   data-parallax
-                  className={`absolute inset-0 bg-gradient-to-br ${p.accent} opacity-20`}
+                  className={`absolute inset-0 bg-linear-to-br ${p.accent} opacity-20`}
                 />
                 <div className="absolute inset-0 bg-grid opacity-40" />
                 <div className="absolute inset-0 flex items-center justify-center">
@@ -125,9 +146,9 @@ export function Projects() {
                 </div>
                 <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs text-muted-foreground">
                   <span>{p.year}</span>
-                  <span className="rounded-full border border-border bg-background/60 backdrop-blur px-2.5 py-1">
+                  {/* <span className="rounded-full border border-border bg-background/60 backdrop-blur px-2.5 py-1">
                     Case study
-                  </span>
+                  </span> */}
                 </div>
               </div>
 
@@ -163,7 +184,10 @@ export function Projects() {
                     </motion.a>
                   )}
                   <a
-                    href={p.repo ?? "https://github.com/sandesh101/postman-collection-generator"}
+                    href={
+                      p.repo ??
+                      "https://github.com/sandesh101/postman-collection-generator"
+                    }
                     target="_blank"
                     rel="noreferrer"
                     className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2.5 text-sm hover:bg-secondary transition-colors"
