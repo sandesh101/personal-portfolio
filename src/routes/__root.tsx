@@ -75,18 +75,51 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   {
     head: () => ({
       meta: [
-        { charSet: "utf-8" },
-        { name: "viewport", content: "width=device-width, initial-scale=1" },
-        { title: "Lovable App" },
-        { name: "description", content: "Lovable Generated Project" },
-        { name: "author", content: "Lovable" },
-        { property: "og:title", content: "Lovable App" },
-        { property: "og:description", content: "Lovable Generated Project" },
+        { title: "Sandesh Rimal | Flutter Developer in Nepal" },
+        {
+          name: "description",
+          content:
+            "Sandesh Rimal is a Flutter developer in Nepal specializing in mobile app development, backend systems, UI/UX, and scalable digital products.",
+        },
+        {
+          name: "keywords",
+          content:
+            "Sandesh Rimal, Flutter developer in Nepal, mobile app developer Nepal, Dart developer, full-stack developer Nepal, Flutter app developer",
+        },
+        { name: "robots", content: "index,follow" },
+        { name: "author", content: "Sandesh Rimal" },
         { property: "og:type", content: "website" },
-        { name: "twitter:card", content: "summary" },
-        { name: "twitter:site", content: "@Lovable" },
+        {
+          property: "og:title",
+          content: "Sandesh Rimal | Flutter Developer in Nepal",
+        },
+        {
+          property: "og:description",
+          content:
+            "Flutter developer in Nepal building high-performing mobile apps, modern digital experiences, and scalable backend solutions.",
+        },
+        { property: "og:url", content: "https://sandeshrimal.com.np/" },
+        {
+          property: "og:image",
+          content: "https://sandeshrimal.com.np/og-image.svg",
+        },
+        { property: "twitter:card", content: "summary_large_image" },
+        {
+          property: "twitter:title",
+          content: "Sandesh Rimal | Flutter Developer in Nepal",
+        },
+        {
+          property: "twitter:description",
+          content:
+            "Flutter developer in Nepal designing and building amazing mobile experiences.",
+        },
+        {
+          property: "twitter:image",
+          content: "https://sandeshrimal.com.np/og-image.svg",
+        },
       ],
       links: [
+        { rel: "canonical", href: "https://sandeshrimal.com.np/" },
         { rel: "icon", type: "image/png", href: "/favicon.png" },
         { rel: "stylesheet", href: appCss },
         { rel: "preconnect", href: "https://fonts.googleapis.com" },
