@@ -388,13 +388,15 @@ export function Hero() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.7, duration: 0.6 }}
-            className="inline-flex items-center gap-2 rounded-full border border-border bg-surface/60 backdrop-blur px-3 py-1.5 text-xs text-muted-foreground"
+            className="inline-flex max-w-full items-center gap-2 rounded-full border border-border bg-surface/60 backdrop-blur px-3 py-1.5 text-xs text-muted-foreground"
           >
             <span className="relative flex h-2 w-2">
               <span className="absolute inset-0 rounded-full bg-emerald-400 pulse-dot" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
             </span>
-            Available for freelance &amp; collaborations
+            <span className="min-w-0 text-balance">
+              Available for freelance &amp; collaborations
+            </span>
           </motion.div>
 
           <h1 className="mt-8 font-display font-medium tracking-[-0.04em] text-balance text-[clamp(2.75rem,9vw,7.5rem)] leading-[0.95]">

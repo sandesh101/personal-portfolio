@@ -26,7 +26,9 @@ export function Nav({ onOpenCmd }: { onOpenCmd: () => void }) {
         // When multiple sections intersect, pick the one with largest visible area
         const visible = entries.filter((e) => e.isIntersecting);
         if (visible.length === 0) return;
-        visible.sort((a, b) => (b.intersectionRatio || 0) - (a.intersectionRatio || 0));
+        visible.sort(
+          (a, b) => (b.intersectionRatio || 0) - (a.intersectionRatio || 0),
+        );
         setActive(visible[0].target.id);
       },
       { rootMargin: "-40% 0px -55% 0px" },
@@ -54,13 +56,16 @@ export function Nav({ onOpenCmd }: { onOpenCmd: () => void }) {
       className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-4 md:pt-6 px-4"
     >
       <nav
-        className={`flex items-center gap-2 rounded-full border border-border backdrop-blur-xl transition-all duration-500 ${
+        className={`flex w-full max-w-max items-center gap-2 rounded-full border border-border backdrop-blur-xl transition-all duration-500 ${
           scrolled
             ? "bg-background/70 shadow-[0_8px_40px_-8px_rgba(0,0,0,0.5)]"
             : "bg-background/30"
-        } pl-5 pr-2 py-2`}
+        } pl-4 pr-2 py-2 sm:pl-5`}
       >
-        <a href="#home" className="font-display font-semibold text-sm tracking-tight mr-2">
+        <a
+          href="#home"
+          className="font-display font-semibold text-sm tracking-tight mr-2"
+        >
           SR<span className="text-muted-foreground">.</span>
         </a>
         <ul className="hidden md:flex items-center gap-1 text-sm">
@@ -77,7 +82,9 @@ export function Nav({ onOpenCmd }: { onOpenCmd: () => void }) {
                     transition={{ type: "spring", stiffness: 380, damping: 30 }}
                   />
                 )}
-                <span className={`relative z-10 ${active === s.id ? "text-foreground" : ""}`}>
+                <span
+                  className={`relative z-10 ${active === s.id ? "text-foreground" : ""}`}
+                >
                   {s.label}
                 </span>
               </a>

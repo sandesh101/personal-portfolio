@@ -77,6 +77,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       meta: [
         { title: "Sandesh Rimal | Flutter Developer in Nepal" },
         {
+          name: "viewport",
+          content: "width=device-width, initial-scale=1",
+        },
+        {
           name: "description",
           content:
             "Sandesh Rimal is a Flutter developer in Nepal specializing in mobile app development, backend systems, UI/UX, and scalable digital products.",

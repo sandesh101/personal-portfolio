@@ -50,26 +50,29 @@ export function Contact() {
             >
               <a
                 href="mailto:rimal.sandesh11@gmail.com"
-                className="group flex items-center gap-3 text-foreground"
+                className="group flex min-w-0 items-center gap-3 text-foreground"
               >
-                <Mail className="h-4 w-4" /> rimal.sandesh11@gmail.com
+                <Mail className="h-4 w-4 shrink-0" />{" "}
+                <span className="break-all">rimal.sandesh11@gmail.com</span>
                 <ArrowUpRight className="h-4 w-4 opacity-0 -translate-x-2 transition-all group-hover:opacity-100 group-hover:translate-x-0" />
               </a>
               <a
                 href="https://github.com/sandesh101"
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center gap-3 hover:text-foreground transition-colors"
+                className="flex min-w-0 items-center gap-3 hover:text-foreground transition-colors"
               >
-                <Github className="h-4 w-4" /> github.com/sandesh101
+                <Github className="h-4 w-4 shrink-0" />{" "}
+                <span className="break-all">github.com/sandesh101</span>
               </a>
               <a
                 href="https://linkedin.com/in/sandesh-rimal"
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center gap-3 hover:text-foreground transition-colors"
+                className="flex min-w-0 items-center gap-3 hover:text-foreground transition-colors"
               >
-                <Linkedin className="h-4 w-4" /> linkedin.com/in/sandesh-rimal
+                <Linkedin className="h-4 w-4 shrink-0" />{" "}
+                <span className="break-all">linkedin.com/in/sandesh-rimal</span>
               </a>
             </div>
 
