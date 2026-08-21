@@ -24,7 +24,7 @@ const projects: Project[] = [
       "ChinaBazar is a comprehensive e-commerce platform (modular monolith) with NestJS backend, Next.js web, and Flutter mobile apps for consumers and warehouse operations, covering shopping, payments, notifications, SKU/inventory management, and ERP integration.",
     stack: ["Nest Js", "TypeScript", "Flutter", "Bloc"],
     accent: "from-sky-200 to-indigo-500",
-    link: "https://chynabazar.com",
+    link: "https://play.google.com/store/apps/details?id=com.chinabazar.app",
   },
   {
     title: "Express Postman Collection Generator",
@@ -34,6 +34,14 @@ const projects: Project[] = [
     stack: ["Node.js", "Express", "postman-collection"],
     accent: "from-emerald-200 to-emerald-500",
     link: "https://www.npmjs.com/package/express-routes-postman",
+  },
+  {
+    title: "Portfolio Website",
+    year: "2025",
+    description:
+      "An animated, minimal developer portfolio built with React, GSAP and Lenis — focused on motion, typography and cinematic transitions.",
+    stack: ["React", "GSAP", "Lenis", "Tailwind"],
+    accent: "from-neutral-100 to-neutral-400",
   },
   {
     title: "खर्च — Expense Tracker",
@@ -50,14 +58,6 @@ const projects: Project[] = [
       "Upload, organize and access semester notes and past question papers — with offline support and subject-based structure for students.",
     stack: ["Flutter", "Firebase", "Node.js", "MongoDB"],
     accent: "from-neutral-300 to-neutral-600",
-  },
-  {
-    title: "Portfolio Website",
-    year: "2025",
-    description:
-      "An animated, minimal developer portfolio built with React, GSAP and Lenis — focused on motion, typography and cinematic transitions.",
-    stack: ["React", "GSAP", "Lenis", "Tailwind"],
-    accent: "from-neutral-100 to-neutral-400",
   },
   // {
   //   title: "MERN API Suite",
@@ -183,17 +183,6 @@ export function Projects() {
                       Live preview <ArrowUpRight className="h-4 w-4" />
                     </motion.a>
                   )}
-                  <a
-                    href={
-                      p.repo ??
-                      "https://github.com/sandesh101/postman-collection-generator"
-                    }
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2.5 text-sm hover:bg-secondary transition-colors"
-                  >
-                    <Github className="h-4 w-4" /> Code
-                  </a>
                 </div>
               </div>
             </article>

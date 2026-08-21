@@ -13,17 +13,18 @@ const timeline = [
       "Full-time Flutter Developer working on cross-platform mobile apps and feature delivery.",
   },
   {
-    year: "May 2024 — Present",
+    year: "July 2023 — Present",
     role: "Instructor",
-    org: "Asian School of Management and Technology",
+    org: "[St. Lawrence College, Asian School of Management and Technology]",
     description:
-      "Part-time instructor teaching Java, JavaScript, Mobile Programming, PHP, MySQL mentoring students.",
+      "Part-time instructor teaching Java, JavaScript, Mobile Programming, PHP, MySQL, Web Development, and mentoring students.",
   },
   {
     year: "Jan 2024 — Sep 2024",
     role: "Flutter Developer",
     org: "Eydean Inc.",
-    description: "Worked on Flutter projects and mobile features across client apps.",
+    description:
+      "Worked on Flutter projects and mobile features across client apps.",
   },
   {
     year: "Jul 2023 — Feb 2024",
@@ -36,7 +37,8 @@ const timeline = [
     year: "May 2023 — Sep 2023",
     role: "Flutter Developer",
     org: "WHive IT Professionals",
-    description: "Interning Flutter development on mobile projects and integrations.",
+    description:
+      "Interning Flutter development on mobile projects and integrations.",
   },
 ];
 
@@ -51,7 +53,11 @@ const education = [
     org: "Asian School of Management and Technology (T.U. Affiliated)",
     year: "2018-2022",
   },
-  { title: "+2", org: "National Institute of Science and Technology", year: "2016-2018" },
+  {
+    title: "+2",
+    org: "National Institute of Science and Technology",
+    year: "2016-2018",
+  },
 ];
 
 export function Experience() {
@@ -104,9 +110,13 @@ export function Experience() {
                   <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
                     {t.year}
                   </div>
-                  <h3 className="mt-2 font-display text-xl md:text-2xl font-medium">{t.role}</h3>
+                  <h3 className="mt-2 font-display text-xl md:text-2xl font-medium">
+                    {t.role}
+                  </h3>
                   <div className="text-muted-foreground">{t.org}</div>
-                  <p className="mt-3 text-muted-foreground text-balance">{t.description}</p>
+                  <p className="mt-3 text-muted-foreground text-balance">
+                    {t.description}
+                  </p>
                 </li>
               ))}
             </ul>
@@ -134,8 +144,12 @@ export function Experience() {
                 <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
                   {e.year}
                 </div>
-                <h3 className="mt-3 font-display text-lg font-medium leading-snug">{e.title}</h3>
-                <div className="mt-1 text-sm text-muted-foreground">{e.org}</div>
+                <h3 className="mt-3 font-display text-lg font-medium leading-snug">
+                  {e.title}
+                </h3>
+                <div className="mt-1 text-sm text-muted-foreground">
+                  {e.org}
+                </div>
               </div>
             ))}
           </div>

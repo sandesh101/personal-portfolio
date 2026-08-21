@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Command, Sun, Moon } from "lucide-react";
+import { Command } from "lucide-react";
 
 const sections = [
   { id: "home", label: "Home" },
@@ -14,7 +14,7 @@ const sections = [
 export function Nav({ onOpenCmd }: { onOpenCmd: () => void }) {
   const [active, setActive] = useState("home");
   const [scrolled, setScrolled] = useState(false);
-  const [dark, setDark] = useState(true);
+  const [dark] = useState(true);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -100,13 +100,13 @@ export function Nav({ onOpenCmd }: { onOpenCmd: () => void }) {
             <Command className="h-3 w-3" />
             <span>K</span>
           </button>
-          <button
+          {/* <button
             onClick={() => setDark((d) => !d)}
             aria-label="Toggle theme"
             className="inline-flex h-8 w-8 items-center justify-center rounded-full hover:bg-secondary transition-colors"
           >
             {dark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-          </button>
+          </button> */}
         </div>
       </nav>
     </motion.header>
