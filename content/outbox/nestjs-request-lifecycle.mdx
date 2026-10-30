@@ -1,0 +1,39 @@
+---
+id: "#003"
+title: "From AuthGuard to 201: one request through NestJS"
+channel: NestJS
+route: /notes/nestjs
+date: "2026-10-30"
+excerpt: "Middleware, guards, interceptors, pipes, controller, service: the order things actually run in."
+sample: true
+---
+
+Every request to a NestJS app passes the same checkpoints in the same order. Once you know the order, most "why didn't my validation run?" bugs stop being mysteries.
+
+## The order things run in
+
+A request meets middleware first, then guards, then interceptors on the way in, then pipes, and only then your controller method. The response travels back out through the interceptors, and anything thrown along the way lands in an exception filter.
+
+<Lifecycle />
+
+## Guards decide who
+
+A guard answers one question: may this request continue? Returning false, or throwing, stops it before any of your business logic runs.
+
+```ts
+@UseGuards(AuthGuard)
+@Post('messages')
+create(@Body() dto: CreateMessageDto) {
+  return this.messages.create(dto);
+}
+```
+
+## Pipes decide what
+
+Pipes run after guards, so validation only happens for callers you already trust. With a global `ValidationPipe`, a bad DTO becomes a 400 before the controller ever sees it.
+
+> [A pull-out line from your post goes here.]
+
+## The reply
+
+[Sample ending. Replace with your conclusion.]
