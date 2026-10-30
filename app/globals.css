@@ -1,0 +1,258 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-plex-sans), system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+  --font-deva: var(--font-mukta), sans-serif;
+  --color-bg: var(--bg);
+  --color-fill: var(--fill);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-ok: var(--ok);
+  --color-accent: var(--accent);
+  --color-on-accent: var(--on-accent);
+  --color-accent-tint: var(--accent-tint);
+  --color-wait: var(--wait);
+  --color-hl: var(--hl);
+  --color-navy: var(--navy);
+  --color-navy-fg: var(--navy-fg);
+  --color-inv-muted: var(--inv-muted);
+  --color-inv-line: var(--inv-line);
+}
+
+/* Light is the default. Dark only applies when the toggle has set it. */
+:root {
+  color-scheme: light;
+  --bg: #ffffff;
+  --fill: #f5f5f5;
+  --ink: #0a0a0a;
+  --muted: #595959;
+  --line: #e5e5e5;
+  --ok: #15803d;
+  --accent: #2d52e0;
+  --on-accent: #ffffff;
+  --accent-tint: #eef2fe;
+  --wait: #2d52e0;
+  --hl: #eef2fe;
+  --navy: #0b1020;
+  --navy-fg: #ffffff;
+  --inv-muted: #a3a9bc;
+  --inv-line: #2a3045;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0a0a0a;
+  --fill: #141414;
+  --ink: #ededed;
+  --muted: #9a9a9a;
+  --line: #262626;
+  --ok: #22c55e;
+  --accent: #7c9cff;
+  --on-accent: #0a0a0a;
+  --accent-tint: #121a33;
+  --wait: #7c9cff;
+  --hl: #131b33;
+  --navy: #10162b;
+  --navy-fg: #ededed;
+  --inv-muted: #8c93a8;
+  --inv-line: #2a3248;
+}
+
+/* The toggle label names the theme you would switch to. */
+.to-light {
+  display: none;
+}
+:root[data-theme="dark"] .to-dark {
+  display: none;
+}
+:root[data-theme="dark"] .to-light {
+  display: inline;
+}
+html {
+  scroll-behavior: auto;
+}
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* In the base layer so utilities (e.g. a field's own focus style) can override it. */
+@layer base {
+  :focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 3px;
+  }
+  .on-navy :focus-visible {
+    outline-color: #ffffff;
+  }
+}
+
+/* Layout: 1280px of content plus the responsive gutter on each side. */
+@utility wrap {
+  max-width: calc(1280px + 2 * clamp(20px, 4vw, 48px));
+  margin-inline: auto;
+  padding-inline: clamp(20px, 4vw, 48px);
+}
+
+@utility mono-label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex h-12 items-center rounded-md px-5 font-medium;
+  }
+  .btn-solid {
+    @apply bg-ink text-bg;
+  }
+  .btn-outline {
+    @apply border border-ink;
+  }
+  /* The only blue buttons are the ones that send something. */
+  .btn-send {
+    @apply cursor-pointer border-0 bg-accent text-on-accent;
+  }
+}
+
+/* Mobile menu sheet. Visibility flips at once on open (so focus can move in) and after the fade on close. */
+.menu-sheet {
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition:
+    opacity 200ms ease-out,
+    transform 200ms ease-out,
+    visibility 0s linear 200ms;
+}
+.menu-sheet[data-open="true"] {
+  visibility: visible;
+  opacity: 1;
+  transform: none;
+  transition-delay: 0s;
+}
+@media (prefers-reduced-motion: reduce) {
+  .menu-sheet {
+    transition: none;
+  }
+}
+
+/* Hero entrance: plain CSS so it runs before any script loads. Order comes from data-hero. */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+}
+@keyframes draw {
+  from {
+    transform: scaleX(0);
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  [data-hero] {
+    animation: rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  [data-hero="1"] {
+    animation-delay: 0.1s;
+  }
+  [data-hero="2"] {
+    animation-delay: 0.45s;
+  }
+  [data-hero="3"] {
+    animation-delay: 0.6s;
+  }
+  [data-hero-rule] {
+    transform-origin: left;
+    animation: draw 0.9s cubic-bezier(0.65, 0, 0.35, 1) 0.3s both;
+  }
+  /* Scroll reveals start hidden only when JS is on, so no-JS visitors see everything (GSAP in PageAnimations). */
+  html.js [data-reveal] {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+}
+
+/* The diagram plays with JS and shows its final state without it. */
+html:not(.js) .js-only {
+  display: none;
+}
+html.js [data-diagram][data-ready="false"] {
+  visibility: hidden;
+}
+
+/* MDX post body */
+.post > p:first-child {
+  margin: 0;
+  font-size: 21px;
+  line-height: 1.55;
+}
+.post p {
+  margin: 14px 0 0;
+}
+.post h2 {
+  margin: 48px 0 0;
+  font-weight: 600;
+  font-size: 26px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  scroll-margin-top: 88px;
+}
+.post pre {
+  margin: 24px 0 0;
+  padding: 18px 20px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--fill);
+  font: 400 14px/1.8 var(--font-mono);
+  overflow-x: auto;
+}
+.post :not(pre) > code {
+  font: 400 15px var(--font-mono);
+  padding: 1px 6px;
+  background: var(--fill);
+  border-radius: 4px;
+}
+.post blockquote {
+  margin: 32px 0 0;
+  padding: 4px 0 4px 20px;
+  border-left: 2px solid var(--accent);
+  font-size: 20px;
+  line-height: 1.5;
+}
+.post blockquote p {
+  margin: 0;
+}
+.post ul,
+.post ol {
+  margin: 14px 0 0;
+  padding-left: 1.25em;
+}
+.post ul {
+  list-style: disc;
+}
+.post ol {
+  list-style: decimal;
+}
+.post li {
+  margin-top: 6px;
+}
+.post a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}

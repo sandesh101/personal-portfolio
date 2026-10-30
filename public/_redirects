@@ -1,0 +1,8 @@
+# The previous site had /about and /contact pages (they are in its old sitemap).
+# Send them to the matching home-page sections so old links and search results keep working.
+/about /#about 301
+/contact /#contact 301
+
+# Google Search Console checks this file at its exact .html URL. Cloudflare would redirect
+# /name.html to /name, so serve it as a 200 rewrite instead (no redirect for Google to follow).
+/googlec6895573afd77883.html /googlec6895573afd77883 200

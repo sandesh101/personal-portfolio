@@ -37,3 +37,5 @@ out/
 .svelte-kit/
 .vercel/
 .netlify/
+# Wrangler local state
+.wrangler/

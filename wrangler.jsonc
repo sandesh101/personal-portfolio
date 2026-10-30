@@ -1,7 +1,11 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
+  // Same Worker name as the previous site, so deploying replaces it and keeps its custom domain.
   "name": "tanstack-start-app",
   "compatibility_date": "2025-09-24",
-  "compatibility_flags": ["nodejs_compat"],
-  "main": "src/server.ts",
+  // Static site: no Worker code, just the exported files.
+  "assets": {
+    "directory": "./out",
+    "not_found_handling": "404-page"
+  }
 }
