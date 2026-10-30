@@ -15,7 +15,13 @@ export const metadata: Metadata = {
   title: "Outbox",
   description,
   alternates: { canonical: "/outbox", types: rssAlternates },
-  openGraph: { url: "/outbox", title: "Outbox — Sandesh Rimal", description },
+  openGraph: {
+    type: "website",
+    siteName: "Sandesh Rimal",
+    url: "/outbox",
+    title: "Outbox — Sandesh Rimal",
+    description,
+  },
 };
 
 export default function OutboxPage() {

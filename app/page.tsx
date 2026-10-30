@@ -14,7 +14,7 @@ import { Work } from "@/components/sections/Work";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" }, // add types: rssAlternates (from "@/lib/site") when Outbox is back
-  openGraph: { url: "/" },
+  openGraph: { type: "website", siteName: "Sandesh Rimal", url: "/" },
 };
 
 export default function Home() {

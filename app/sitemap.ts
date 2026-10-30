@@ -15,7 +15,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
   //     lastModified: new Date(`${p.date}T00:00:00Z`),
   //   }));
   return [
-    { url: SITE_URL, changeFrequency: "monthly", priority: 1 },
+    {
+      url: SITE_URL,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 1,
+    },
     // { url: `${SITE_URL}/work/chynabazar`, changeFrequency: "yearly", priority: 0.8 },
     // { url: `${SITE_URL}/outbox`, changeFrequency: "weekly", priority: 0.7 },
     // ...posts,

@@ -15,6 +15,8 @@ export const metadata: Metadata = {
   description,
   alternates: { canonical: "/work/chynabazar" },
   openGraph: {
+    type: "website",
+    siteName: "Sandesh Rimal",
     url: "/work/chynabazar",
     title: "Chynabazar case study — Sandesh Rimal",
     description,

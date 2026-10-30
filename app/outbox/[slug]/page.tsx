@@ -28,6 +28,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     robots: post.sample ? { index: false } : undefined,
     openGraph: {
       type: "article",
+      siteName: "Sandesh Rimal",
       url,
       title: post.title,
       description: post.excerpt,
