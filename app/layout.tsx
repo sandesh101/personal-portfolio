@@ -26,6 +26,12 @@ const deva = Mukta({
 
 const description =
   "Flutter developer and backend engineer in Kathmandu. I take mobile apps and the servers behind them from first screen to production.";
+const previewImage = {
+  url: "/opengraph-image.png",
+  width: 1200,
+  height: 630,
+  alt: "Sandesh Rimal — Flutter developer and backend engineer",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -34,8 +40,20 @@ export const metadata: Metadata = {
     template: "%s — Sandesh Rimal",
   },
   description,
-  openGraph: { type: "website", siteName: "Sandesh Rimal", locale: "en_US" },
-  twitter: { card: "summary_large_image" },
+  openGraph: {
+    type: "website",
+    siteName: "Sandesh Rimal",
+    locale: "en_US",
+    title: "Sandesh Rimal — Flutter developer and backend engineer",
+    description,
+    images: [previewImage],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Sandesh Rimal — Flutter developer and backend engineer",
+    description,
+    images: [previewImage.url],
+  },
   icons: { icon: "/favicon.png" },
 };
 
