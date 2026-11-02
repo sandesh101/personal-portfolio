@@ -9,7 +9,7 @@ export function Contact() {
     >
       <div className="wrap">
         <p data-reveal className="mono-label">
-          04 — Contact
+          05 — Contact
         </p>
         <h2
           data-reveal
@@ -45,6 +45,20 @@ export function Contact() {
                 className="btn btn-outline"
               >
                 LinkedIn ↗
+              </a>
+              <a
+                href={LINKS.github}
+                {...ext(LINKS.github)}
+                className="btn btn-outline"
+              >
+                GitHub ↗
+              </a>
+              <a
+                href={LINKS.resume}
+                {...ext(LINKS.resume)}
+                className="btn btn-outline"
+              >
+                Résumé ↗
               </a>
             </div>
           </div>

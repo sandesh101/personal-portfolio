@@ -8,7 +8,7 @@ export function StatusBar() {
       className="border-b border-line font-mono text-xs leading-none text-muted"
     >
       <div className="wrap flex flex-wrap justify-between gap-x-6 gap-y-1.5 py-2.5 tracking-[0.04em] uppercase">
-        <span>
+        <span className="max-sm:hidden">
           Kathmandu, Nepal · <KtmClock /> NPT
         </span>
         <span className="inline-flex items-center gap-2">

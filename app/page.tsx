@@ -7,9 +7,9 @@ import { Contact } from "@/components/sections/Contact";
 import { Hero } from "@/components/sections/Hero";
 // Outbox is hidden for now.
 // import { OutboxPreview } from "@/components/sections/OutboxPreview";
+import { Services } from "@/components/sections/Services";
 import { Stack } from "@/components/sections/Stack";
 import { StatusBar } from "@/components/sections/StatusBar";
-import { Wire } from "@/components/sections/Wire";
 import { Work } from "@/components/sections/Work";
 
 export const metadata: Metadata = {
@@ -47,8 +47,8 @@ export default function Home() {
       <main id="main">
         <PageAnimations />
         <Hero />
-        <Wire />
         <Work />
+        <Services />
         <Stack />
         <About />
         {/* <OutboxPreview /> */}

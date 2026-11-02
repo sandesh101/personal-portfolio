@@ -38,7 +38,7 @@ export function HomeHeader() {
           <Brand href="#top" />
           <nav
             aria-label="Primary"
-            className="hidden items-center gap-0.5 min-[900px]:flex"
+            className="hidden items-center gap-0.5 min-[1024px]:flex"
           >
             {NAV.map((n) => (
               <a
@@ -53,9 +53,16 @@ export function HomeHeader() {
               </a>
             ))}
             <a
+              href={LINKS.github}
+              {...ext(LINKS.github)}
+              className="inline-flex min-h-11 items-center px-3 text-sm"
+            >
+              GitHub ↗
+            </a>
+            <a
               href={LINKS.resume}
               {...ext(LINKS.resume)}
-              className="ml-3 inline-flex h-10 items-center rounded-md border border-ink px-3.5 text-sm font-medium"
+              className="ml-3 inline-flex h-11 items-center rounded-md border border-ink px-3.5 text-sm font-medium"
             >
               Résumé ↗
             </a>
@@ -67,7 +74,7 @@ export function HomeHeader() {
               type="button"
               onClick={() => setOpen(true)}
               aria-label="Open menu"
-              className="h-11 cursor-pointer rounded-md border border-ink bg-transparent px-3.5 text-sm font-medium text-ink min-[900px]:hidden"
+              className="h-11 cursor-pointer rounded-md border border-ink bg-transparent px-3.5 text-sm font-medium text-ink min-[1024px]:hidden"
             >
               Menu
             </button>
@@ -81,8 +88,8 @@ export function HomeHeader() {
         aria-label="Menu"
         inert={!open}
         data-open={open}
-        data-lenis-prevent
-        className="menu-sheet fixed inset-0 z-60 flex flex-col overflow-auto bg-bg px-5 pb-7 min-[900px]:hidden"
+       
+        className="menu-sheet fixed inset-0 z-60 flex flex-col overflow-auto bg-bg px-5 pb-7 min-[1024px]:hidden"
       >
         <div className="flex h-16 items-center justify-between border-b border-line">
           <span lang="ne" className="font-deva text-[21px] font-bold">
@@ -126,6 +133,13 @@ export function HomeHeader() {
             className="inline-flex min-h-11 items-center"
           >
             {EMAIL}
+          </a>
+          <a
+            href={LINKS.github}
+            {...ext(LINKS.github)}
+            className="inline-flex min-h-11 items-center"
+          >
+            GitHub ↗
           </a>
           <Link
             href={LINKS.resume}

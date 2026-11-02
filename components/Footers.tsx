@@ -2,9 +2,9 @@ import Link from "next/link";
 import { EMAIL, ext, LINKS, NAV } from "@/lib/site";
 import { KtmClock } from "./KtmClock";
 
-const stripLink = "inline-flex min-h-10 items-center";
+const stripLink = "inline-flex min-h-11 items-center";
 const strip =
-  "mono-label wrap flex flex-wrap items-center justify-between gap-x-7 gap-y-2 !text-[11px]";
+  "mono-label wrap flex flex-wrap items-center justify-between gap-x-7 gap-y-2";
 
 export function HomeFooter() {
   return (
@@ -23,7 +23,7 @@ export function HomeFooter() {
             </p>
           </div>
           <nav aria-label="Footer" className="flex flex-[0_1_160px] flex-col">
-            <p className="mono-label mb-1 !text-[11px]">Site</p>
+            <p className="mono-label mb-1">Site</p>
             {NAV.map((n) => (
               <a key={n.href} href={n.href} className={stripLink}>
                 {n.label}
@@ -31,7 +31,7 @@ export function HomeFooter() {
             ))}
           </nav>
           <div className="flex min-w-0 flex-[0_1_220px] flex-col">
-            <p className="mono-label mb-1 !text-[11px]">Elsewhere</p>
+            <p className="mono-label mb-1">Elsewhere</p>
             <a href={`mailto:${EMAIL}`} className={stripLink}>
               Email
             </a>
@@ -50,7 +50,7 @@ export function HomeFooter() {
             </a>
           </div>
         </div>
-        <div className="mono-label mt-12 flex flex-wrap items-center justify-between gap-x-7 gap-y-2 border-t border-line pt-4 !text-[11px]">
+        <div className="mono-label mt-12 flex flex-wrap items-center justify-between gap-x-7 gap-y-2 border-t border-line pt-4">
           <span>© 2026 Sandesh Rimal</span>
           <span>
             KTM <KtmClock /> · UTC+5:45
