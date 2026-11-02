@@ -1,27 +1,6 @@
 import Image from "next/image";
 // import Link from "next/link"; // needed again when the case-study button is restored
 import { ext, LINKS } from "@/lib/site";
-import { ScreenSlot } from "../ScreenSlot";
-
-// Consumer: Google Play listing screenshot. Storefront: capture of chynabazar.com at phone width.
-// Checkout: second Play listing screenshot. The warehouse app is internal, so it is not shown here.
-const screens = [
-  {
-    label: "Consumer",
-    src: "/work/chynabazar-consumer.webp",
-    alt: "Chynabazar consumer app, home screen",
-  },
-  {
-    label: "Storefront",
-    src: "/work/chynabazar-storefront.webp",
-    alt: "Chynabazar web storefront on a phone",
-  },
-  {
-    label: "Checkout",
-    src: "/work/chynabazar-checkout.webp",
-    alt: "Chynabazar consumer app, checkout screen",
-  },
-];
 
 const facts = [
   ["Backend", "NestJS, TypeScript"],
@@ -111,24 +90,20 @@ export function Work() {
             <div data-reveal className="min-w-0 flex-[1.1_1_440px]">
               <div
                 role="group"
-                aria-label="Chynabazar consumer app, storefront and checkout screens"
-                className="flex aspect-[4/5] items-end justify-center gap-[4%] overflow-hidden rounded-md bg-accent-tint px-[7%] sm:aspect-[5/4]"
+                aria-label="Chynabazar showcase video"
+                className="overflow-hidden rounded-md bg-accent-tint"
               >
-                <ScreenSlot
-                  {...screens[0]}
-                  parallax={9}
-                  className="mb-[-8%] aspect-[9/19] w-[40%] sm:w-[27%]"
-                />
-                <ScreenSlot
-                  {...screens[1]}
-                  parallax={-7}
-                  className="mb-[6%] aspect-[9/19] w-[44%] sm:w-[31%]"
-                />
-                <ScreenSlot
-                  {...screens[2]}
-                  parallax={14}
-                  className="mb-[-16%] aspect-[9/19] w-[27%] max-sm:hidden"
-                />
+                <video
+                  className="block aspect-[4/5] w-full object-cover sm:aspect-[5/4]"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  poster="/work/chynabazar-storefront-wide.webp"
+                  aria-label="Chynabazar product showcase"
+                >
+                  <source src="/work/chynabazar-showcase.mp4" type="video/mp4" />
+                </video>
               </div>
             </div>
           </div>
