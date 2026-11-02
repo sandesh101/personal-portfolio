@@ -88,6 +88,7 @@ export function HomeHeader() {
         aria-label="Menu"
         inert={!open}
         data-open={open}
+        data-lenis-prevent
        
         className="menu-sheet fixed inset-0 z-60 flex flex-col overflow-auto bg-bg px-5 pb-7 min-[1024px]:hidden"
       >
