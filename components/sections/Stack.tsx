@@ -6,11 +6,11 @@ const front = [
   ["Figma to UI", "handoff"],
 ];
 const back = [
-  ["NestJS, Node.js, Express", "TypeScript"],
+  ["NestJS, Node.js, Express", "TypeScript · Chynabazar"],
   ["REST APIs", "DTOs · guards"],
   ["MongoDB, MySQL", "data"],
   ["SuperTokens auth", "security"],
-  ["Modular monolith", "architecture"],
+  ["Modular monolith", "architecture · Chynabazar"],
 ];
 
 function Column({
@@ -44,7 +44,7 @@ function Column({
             className="flex justify-between gap-4 border-b border-inv-line py-3"
           >
             <span>{k}</span>
-            <span className="text-right font-mono text-xs text-inv-muted">
+            <span className="text-right font-mono text-[13px] text-inv-muted">
               {v}
             </span>
           </li>
@@ -63,7 +63,7 @@ export function Stack() {
     >
       <div className="wrap">
         <p data-reveal className="mono-label !text-inv-muted">
-          02 — Stack
+          03 — Stack
         </p>
         <h2
           data-reveal
@@ -86,7 +86,7 @@ export function Stack() {
             items={back}
           />
         </div>
-        <p className="mt-2 font-mono text-xs text-inv-muted">
+        <p className="mt-2 font-mono text-[13px] text-inv-muted">
           Also: Git · Docker · Postman · Figma · Xcode · Linux
         </p>
       </div>

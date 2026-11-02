@@ -1,6 +1,6 @@
 export function Hero() {
   return (
-    <section className="pt-[clamp(28px,5vw,64px)]">
+    <section className="pt-[clamp(28px,5vw,64px)] pb-[clamp(56px,7vw,96px)]">
       <div className="wrap">
         <div
           data-hero="0"
@@ -19,7 +19,7 @@ export function Hero() {
           lang="ne"
           role="img"
           aria-label="Sandesh, written in Devanagari"
-          className="font-deva mt-[clamp(4px,1.5vw,16px)] text-[calc((100vw_-_2*clamp(20px,4vw,48px))_/_2.26)] sm:text-[clamp(116px,22vw,320px)] leading-[1.12] font-extrabold tracking-[-0.01em] text-accent"
+          className="font-deva mt-[clamp(4px,1.5vw,16px)] text-[calc((100vw_-_2*clamp(20px,4vw,48px))_/_2.26)] sm:text-[clamp(116px,16vw,232px)] leading-[1.12] font-extrabold tracking-[-0.01em] text-accent"
         >
           सन्देश
         </p>
@@ -28,22 +28,22 @@ export function Hero() {
           aria-hidden="true"
           className="mt-[clamp(4px,1.5vw,16px)] h-px bg-ink"
         />
-        <div className="flex flex-wrap items-end gap-x-[clamp(32px,6vw,96px)] gap-y-7 pt-[clamp(24px,3vw,40px)]">
+        <div className="flex flex-wrap items-start gap-x-[clamp(32px,6vw,96px)] gap-y-7 pt-[clamp(24px,3vw,40px)]">
           <h1
             data-hero="2"
             className="min-w-0 flex-[2_1_520px] text-[clamp(34px,4.4vw,60px)] leading-[1.08] font-medium tracking-[-0.025em]"
           >
-            I build the apps that send messages and the servers that receive
-            them.
+            I build mobile apps that work, and the servers that keep them
+            working.
           </h1>
           <div
             data-hero="3"
             className="flex min-w-0 flex-[1_1_280px] flex-col gap-5"
           >
             <p className="text-[17px] text-muted">
-              Flutter developer and backend engineer in Kathmandu. I take mobile
-              apps and the servers behind them from first screen to production.
-              I&apos;m also a programming instructor.
+              Flutter developer and backend engineer in Kathmandu. I build with
+              Flutter, NestJS and Next.js, and I&apos;m also a programming
+              instructor.
             </p>
             <div className="flex flex-wrap gap-2.5">
               <a href="#work" className="btn btn-solid">

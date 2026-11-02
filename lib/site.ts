@@ -15,12 +15,13 @@ export const LINKS = {
 
 export const NAV = [
   { num: "01", label: "Work", href: "#work" },
-  { num: "02", label: "Stack", href: "#stack" },
-  { num: "03", label: "About", href: "#about" },
-  // Outbox is hidden for now. To bring it back: restore this line, make Contact "05", and restore the
+  { num: "02", label: "Services", href: "#services" },
+  { num: "03", label: "Stack", href: "#stack" },
+  { num: "04", label: "About", href: "#about" },
+  // Outbox is hidden for now. To bring it back: restore this line, make Contact "06", and restore the
   // <OutboxPreview /> in app/page.tsx, the "05 — Contact" label, the sitemap entries and the case-study button.
   // { num: "04", label: "Outbox", href: "#outbox" },
-  { num: "04", label: "Contact", href: "#contact" },
+  { num: "05", label: "Contact", href: "#contact" },
 ];
 
 export const rssAlternates = { "application/rss+xml": "/outbox/rss.xml" };
