@@ -8,7 +8,7 @@ const front = [
 const back = [
   ["NestJS, Node.js, Express", "TypeScript · Chynabazar"],
   ["REST APIs", "DTOs · guards"],
-  ["MongoDB, MySQL", "data"],
+  ["PostgreSQL, MongoDB, MySQL", "data"],
   ["SuperTokens auth", "security"],
   ["Modular monolith", "architecture · Chynabazar"],
 ];
@@ -87,7 +87,7 @@ export function Stack() {
           />
         </div>
         <p className="mt-2 font-mono text-[13px] text-inv-muted">
-          Also: Git · Docker · Postman · Figma · Xcode · Linux
+          Also: RabbitMQ · Git · Docker · Postman · Figma · Xcode · Linux
         </p>
       </div>
     </section>

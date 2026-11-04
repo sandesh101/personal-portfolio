@@ -30,7 +30,7 @@ const offers = [
   },
   {
     title: "Backends and APIs",
-    body: "NestJS and Node.js APIs with clear modules, validated input, solid authentication and consistent data in MongoDB or MySQL.",
+    body: "NestJS and Node.js APIs with clear modules, validated input, solid authentication and consistent data in PostgreSQL, MongoDB or MySQL.",
   },
   {
     title: "Both halves",
@@ -62,12 +62,12 @@ const faqs = [
     a: "I am based in Kathmandu, Nepal.",
   },
   {
-    q: "Are you available for freelance or full-time work?",
-    a: "Both. I am open to freelance projects and full-time roles.",
+    q: "Are you available for freelance projects?",
+    a: "Yes. I am currently available for freelance projects. I am not looking for full-time roles right now.",
   },
   {
     q: "Which technologies do you use?",
-    a: "Flutter and Dart for mobile, NestJS, Node.js and TypeScript for the backend, MongoDB or MySQL for data, and Firebase for authentication and push notifications.",
+    a: "Flutter and Dart for mobile, NestJS, Node.js and TypeScript for the backend, PostgreSQL, MongoDB or MySQL for data, and Firebase for authentication and push notifications.",
   },
 ];
 

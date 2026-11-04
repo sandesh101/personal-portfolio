@@ -13,11 +13,11 @@ const facts = [
   ],
 ];
 
-// Add a "Role" line to each row once the roles are confirmed.
 const more = [
   {
     name: "express-routes-postman",
     desc: "CLI that turns Express routes into a Postman collection.",
+    role: "Built the whole CLI with Node.js and Express.",
     kind: "CLI · npm",
     cta: "npm ↗",
     href: LINKS.routesPostmanNpm,
@@ -25,6 +25,7 @@ const more = [
   {
     name: "Najik Services",
     desc: "Home-service platform connecting Kathmandu households with trusted professionals.",
+    role: "Built the Flutter (Bloc) mobile app and the NestJS backend, with Postgres, RabbitMQ, Firebase push notifications and SMS.",
     kind: "Platform",
     cta: "Visit ↗",
     href: "https://najikservices.com/",
@@ -32,6 +33,7 @@ const more = [
   {
     name: "Liar's Grid",
     desc: "Offline logic puzzle game, 88 levels in five chapters.",
+    role: "Solo project, built with Flutter and Flame.",
     kind: "Game",
     cta: "Google Play ↗",
     href: LINKS.liarsGridPlay,
@@ -103,7 +105,7 @@ export function Work() {
 
       <section
         aria-labelledby="more-h"
-        className="py-[clamp(64px,9vw,112px)]"
+        className="pt-[clamp(56px,7vw,88px)] pb-[clamp(40px,5vw,64px)]"
       >
         <div className="wrap">
           <h2 id="more-h" className="mono-label mb-4">
@@ -116,15 +118,16 @@ export function Work() {
                 data-reveal
                 href={p.href}
                 {...ext(p.href)}
-                className="group flex flex-wrap items-center gap-x-8 gap-y-2 border-b border-line py-6 transition-colors duration-150 hover:bg-fill md:grid md:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)_150px] md:gap-y-0"
+                className="group flex flex-wrap items-center gap-x-8 gap-y-2 border-b border-line py-6 transition-colors duration-150 hover:bg-fill md:grid md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.6fr)_160px] md:gap-y-0"
               >
                 <span className="min-w-0 flex-[1_1_100%] text-[clamp(24px,2.6vw,32px)] leading-[1.15] font-medium tracking-[-0.02em] transition-transform duration-150 ease-out group-hover:translate-x-1.5 motion-reduce:transition-none md:flex-none">
                   {p.name}
                 </span>
-                <span className="min-w-0 flex-[1_1_240px] text-muted md:flex-none">
-                  {p.desc}
+                <span className="min-w-0 flex-[1_1_240px] md:flex-none">
+                  <span className="block text-muted">{p.desc}</span>
+                  <span className="mt-1.5 block text-[15px]">{p.role}</span>
                 </span>
-                <span className="mono-label flex flex-none justify-between gap-4 md:w-[150px]">
+                <span className="mono-label flex flex-none flex-col gap-1 max-md:w-full max-md:flex-row max-md:justify-between md:w-[160px] md:items-end">
                   <span>{p.kind}</span>
                   <span className="text-ink">{p.cta}</span>
                 </span>

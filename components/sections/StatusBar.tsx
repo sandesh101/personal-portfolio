@@ -13,7 +13,7 @@ export function StatusBar() {
         </span>
         <span className="inline-flex items-center gap-2">
           <span aria-hidden="true" className="size-[7px] bg-ok" />
-          Open to freelance and full-time
+          Available for freelance projects
         </span>
       </div>
     </div>

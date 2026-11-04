@@ -6,7 +6,7 @@ import { sendToForminit } from "@/lib/forminit";
 import { EMAIL } from "@/lib/site";
 import { Segmented } from "./Segmented";
 
-const TOPICS = ["Freelance project", "Full-time role", "Just saying hi"];
+const TOPICS = ["Freelance project", "Just saying hi"];
 const field =
   "w-full min-w-0 border-0 border-b border-ink bg-transparent px-0 text-[17px] text-ink font-[inherit] focus-visible:shadow-[0_1px_0_0_var(--ink)] focus-visible:outline-none";
 
