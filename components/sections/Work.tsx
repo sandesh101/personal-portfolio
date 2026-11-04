@@ -33,8 +33,8 @@ const more = [
     name: "Liar's Grid",
     desc: "Offline logic puzzle game, 88 levels in five chapters.",
     kind: "Game",
-    cta: "Site ↗",
-    href: "https://sites.google.com/view/liarsgrid/home",
+    cta: "Google Play ↗",
+    href: LINKS.liarsGridPlay,
   },
 ];
 

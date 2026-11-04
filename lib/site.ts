@@ -14,6 +14,8 @@ export const LINKS = {
   linkedin: "https://www.linkedin.com/in/sandesh-rimal/",
   chynabazarPlay:
     "https://play.google.com/store/apps/details?id=com.chinabazar.app",
+  liarsGridPlay:
+    "https://play.google.com/store/apps/details?id=com.sandesh.liarsgrid",
   routesPostmanNpm: "https://www.npmjs.com/package/express-routes-postman",
   // The PDF is exported from assets/cv/Sandesh-Rimal-CV.docx (see assets/cv/build.js).
   resume: "/Sandesh-Rimal-CV.pdf",
