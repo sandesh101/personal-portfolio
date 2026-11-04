@@ -18,7 +18,7 @@ export default function NotFound() {
       </SimpleHeader>
 
       <main id="main" className="py-[clamp(40px,6vw,96px)]">
-        <div className="wrap grid items-center gap-x-[clamp(32px,6vw,96px)] gap-y-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)]">
+        <div className="wrap grid items-start gap-x-[clamp(32px,6vw,96px)] gap-y-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)]">
           <div>
             <p className="mono-label">404 — Page not found</p>
             <h1 className="mt-3.5 text-[clamp(40px,5.5vw,80px)] leading-[0.98] font-semibold tracking-[-0.035em]">

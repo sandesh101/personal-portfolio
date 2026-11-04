@@ -1,17 +1,27 @@
 // Breakout where the bricks spell "404". Units are brick widths: the board is W × H cells.
 export const W = 19;
-export const H = 17;
+export const H = 14;
 export const ROWS = 7;
 export const PADDLE_W = 3.4;
 export const PADDLE_H = 0.5;
 export const PADDLE_Y = H - 1.3;
 export const R = 0.3;
-const START_SPEED = 10;
-const MAX_SPEED = 17;
+const START_SPEED = 8;
+const MAX_SPEED = 14;
+export const DEBRIS_LIFE = 0.8;
 
 const FONT: Record<string, string[]> = {
   "4": ["...X.", "..XX.", ".X.X.", "X..X.", "XXXXX", "...X.", "...X."],
   "0": [".XXX.", "X...X", "X..XX", "X.X.X", "XX..X", "X...X", ".XXX."],
+};
+
+/** A broken brick tumbling down and fading out. Purely visual. */
+export type Debris = { x: number; y: number; vx: number; vy: number; rot: number; vr: number; age: number };
+
+/** Things that happened during a step, for sound. The caller drains this list. */
+export type GameEvent = {
+  type: "launch" | "wall" | "paddle" | "brick" | "life" | "lost" | "won";
+  row?: number;
 };
 
 export type Phase = "ready" | "play" | "won" | "lost";
@@ -27,6 +37,8 @@ export type Game = {
   speed: number;
   wait: number;
   phase: Phase;
+  debris: Debris[];
+  events: GameEvent[];
 };
 
 export function newGame(): Game {
@@ -54,6 +66,8 @@ export function newGame(): Game {
     speed: START_SPEED,
     wait: 0.6,
     phase: "ready",
+    debris: [],
+    events: [],
   };
   park(g);
   return g;
@@ -75,12 +89,21 @@ export function movePaddle(g: Game, px: number) {
 
 /** Advance the game by dt seconds. Mutates g. */
 export function step(g: Game, dt: number, rand: () => number = Math.random) {
+  for (const d of g.debris) {
+    d.age += dt;
+    d.vy += 36 * dt;
+    d.x += d.vx * dt;
+    d.y += d.vy * dt;
+    d.rot += d.vr * dt;
+  }
+  g.debris = g.debris.filter((d) => d.age < DEBRIS_LIFE);
   if (g.phase === "won" || g.phase === "lost") return;
   if (g.phase === "ready") {
     park(g);
     g.wait -= dt;
     if (g.wait <= 0) {
       g.phase = "play";
+      g.events.push({ type: "launch" });
       g.vx = (rand() - 0.5) * g.speed * 0.6;
       g.vy = -Math.sqrt(g.speed ** 2 - g.vx ** 2);
     }
@@ -88,25 +111,28 @@ export function step(g: Game, dt: number, rand: () => number = Math.random) {
   }
   // Small sub-steps so a fast ball cannot skip through a brick or the paddle.
   const n = Math.max(1, Math.ceil((g.speed * dt) / 0.2));
-  for (let i = 0; i < n && g.phase === "play"; i++) sub(g, dt / n);
+  for (let i = 0; i < n && g.phase === "play"; i++) sub(g, dt / n, rand);
 }
 
-function sub(g: Game, dt: number) {
+function sub(g: Game, dt: number, rand: () => number) {
   g.x += g.vx * dt;
   g.y += g.vy * dt;
   if (g.x - R < 0) {
     g.x = R;
     g.vx = Math.abs(g.vx);
+    g.events.push({ type: "wall" });
   } else if (g.x + R > W) {
     g.x = W - R;
     g.vx = -Math.abs(g.vx);
+    g.events.push({ type: "wall" });
   }
   if (g.y - R < 0) {
     g.y = R;
     g.vy = Math.abs(g.vy);
+    g.events.push({ type: "wall" });
   }
 
-  hitBrick(g);
+  hitBrick(g, rand);
 
   if (g.vy > 0 && g.y + R >= PADDLE_Y && g.y + R <= PADDLE_Y + PADDLE_H + 0.4 &&
       g.x >= g.px - R && g.x <= g.px + PADDLE_W + R) {
@@ -115,12 +141,16 @@ function sub(g: Game, dt: number) {
     g.vx = g.speed * Math.sin(a);
     g.vy = -g.speed * Math.cos(a);
     g.y = PADDLE_Y - R;
+    g.events.push({ type: "paddle" });
   }
 
   if (g.y - R > H) {
     g.lives--;
-    if (g.lives <= 0) g.phase = "lost";
-    else {
+    if (g.lives <= 0) {
+      g.phase = "lost";
+      g.events.push({ type: "lost" });
+    } else {
+      g.events.push({ type: "life" });
       g.phase = "ready";
       g.wait = 0.8;
       park(g);
@@ -128,7 +158,7 @@ function sub(g: Game, dt: number) {
   }
 }
 
-function hitBrick(g: Game) {
+function hitBrick(g: Game, rand: () => number) {
   for (let cy = Math.floor(g.y - R); cy <= Math.floor(g.y + R); cy++) {
     for (let cx = Math.floor(g.x - R); cx <= Math.floor(g.x + R); cx++) {
       if (cy < 0 || cy >= ROWS || cx < 0 || cx >= W || !g.bricks[cy][cx]) continue;
@@ -137,13 +167,18 @@ function hitBrick(g: Game) {
       if (dx * dx + dy * dy >= R * R) continue;
       g.bricks[cy][cx] = false;
       g.left--;
+      g.events.push({ type: "brick", row: cy });
+      g.debris.push({ x: cx, y: cy, vx: (rand() - 0.5) * 3, vy: -1.5, rot: 0, vr: (rand() - 0.5) * 8, age: 0 });
       if (Math.abs(dx) > Math.abs(dy)) g.vx = dx > 0 ? Math.abs(g.vx) : -Math.abs(g.vx);
       else g.vy = dy > 0 ? Math.abs(g.vy) : -Math.abs(g.vy);
       g.speed = Math.min(MAX_SPEED, g.speed + 0.12);
       const k = g.speed / Math.hypot(g.vx, g.vy);
       g.vx *= k;
       g.vy *= k;
-      if (g.left === 0) g.phase = "won";
+      if (g.left === 0) {
+        g.phase = "won";
+        g.events.push({ type: "won" });
+      }
       return;
     }
   }
