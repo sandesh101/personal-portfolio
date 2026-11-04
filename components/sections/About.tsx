@@ -5,7 +5,7 @@ const jobs = [
     when: "Nov 2025 – now",
     role: "Flutter Developer",
     org: "DarviLab Pvt. Ltd.",
-    note: "Cross-platform apps and feature delivery.",
+    note: "Flutter apps for Chynabazar and Najik.",
   },
   {
     when: "Jul 2023 – now",
@@ -17,13 +17,13 @@ const jobs = [
     when: "Jan – Sep 2024",
     role: "Flutter Developer",
     org: "Eydean Inc.",
-    note: "Flutter features across client apps.",
+    note: "Built Flutter features for Bibaabo, a fintech app, and an ERP project for HERD International.",
   },
   {
     when: "May – Sep 2023",
     role: "Flutter Intern",
     org: "WHive IT Professionals",
-    note: "Mobile projects and integrations.",
+    note: "Developed e-commerce and HR management apps in Flutter.",
   },
 ];
 

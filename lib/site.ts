@@ -1,6 +1,12 @@
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://sandeshrimal.com.np";
 
+export const SITE_TITLE =
+  "Sandesh Rimal — Flutter & mobile app developer in Kathmandu, Nepal";
+export const SITE_DESCRIPTION =
+  "Flutter developer and backend engineer in Kathmandu, Nepal. I build mobile apps and the NestJS servers behind them, from first screen to production.";
+export const SERVICES_PATH = "/services/mobile-app-development-nepal";
+
 export const EMAIL = "rimal.sandesh11@gmail.com";
 
 export const LINKS = {
@@ -8,6 +14,8 @@ export const LINKS = {
   linkedin: "https://www.linkedin.com/in/sandesh-rimal/",
   chynabazarPlay:
     "https://play.google.com/store/apps/details?id=com.chinabazar.app",
+  liarsGridPlay:
+    "https://play.google.com/store/apps/details?id=com.sandesh.liarsgrid",
   routesPostmanNpm: "https://www.npmjs.com/package/express-routes-postman",
   // The PDF is exported from assets/cv/Sandesh-Rimal-CV.docx (see assets/cv/build.js).
   resume: "/Sandesh-Rimal-CV.pdf",
