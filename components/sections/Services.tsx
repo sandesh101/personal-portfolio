@@ -1,3 +1,6 @@
+import Link from "next/link";
+import { SERVICES_PATH } from "@/lib/site";
+
 const items = [
   {
     title: "Mobile apps",
@@ -60,6 +63,9 @@ export function Services() {
           <a href="#contact" className="btn btn-solid">
             Tell me about your project →
           </a>
+          <Link href={SERVICES_PATH} className="btn btn-outline">
+            Mobile app development in Nepal
+          </Link>
           {/* <span className="text-muted">Also open to full-time roles.</span> */}
         </div>
       </div>

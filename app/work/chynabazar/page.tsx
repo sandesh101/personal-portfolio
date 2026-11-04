@@ -13,6 +13,7 @@ const description =
 export const metadata: Metadata = {
   title: "Chynabazar case study",
   description,
+  robots: { index: false }, // placeholder content, hidden until it is written
   alternates: { canonical: "/work/chynabazar" },
   openGraph: {
     type: "website",

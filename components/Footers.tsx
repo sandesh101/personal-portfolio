@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { EMAIL, ext, LINKS, NAV } from "@/lib/site";
+import { EMAIL, ext, LINKS, NAV, SERVICES_PATH } from "@/lib/site";
 import { KtmClock } from "./KtmClock";
 
 const stripLink = "inline-flex min-h-11 items-center";
@@ -19,16 +19,19 @@ export function HomeFooter() {
               सन्देश
             </p>
             <p className="mt-1 max-w-[360px] text-muted">
-              Mobile apps and the servers behind them, built in Kathmandu.
+              Mobile apps and the servers behind them, built in Kathmandu, Nepal.
             </p>
           </div>
-          <nav aria-label="Footer" className="flex flex-[0_1_160px] flex-col">
+          <nav aria-label="Footer" className="flex flex-[0_1_240px] flex-col">
             <p className="mono-label mb-1">Site</p>
             {NAV.map((n) => (
               <a key={n.href} href={n.href} className={stripLink}>
                 {n.label}
               </a>
             ))}
+            <Link href={SERVICES_PATH} className={stripLink}>
+              Mobile app development in Nepal
+            </Link>
           </nav>
           <div className="flex min-w-0 flex-[0_1_220px] flex-col">
             <p className="mono-label mb-1">Elsewhere</p>

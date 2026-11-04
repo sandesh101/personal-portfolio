@@ -1,6 +1,12 @@
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://sandeshrimal.com.np";
 
+export const SITE_TITLE =
+  "Sandesh Rimal — Flutter & mobile app developer in Kathmandu, Nepal";
+export const SITE_DESCRIPTION =
+  "Flutter developer and backend engineer in Kathmandu, Nepal. I build mobile apps and the NestJS servers behind them, from first screen to production.";
+export const SERVICES_PATH = "/services/mobile-app-development-nepal";
+
 export const EMAIL = "rimal.sandesh11@gmail.com";
 
 export const LINKS = {

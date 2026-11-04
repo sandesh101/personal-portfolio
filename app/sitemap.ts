@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { SITE_URL } from "@/lib/site";
+import { SERVICES_PATH, SITE_URL } from "@/lib/site";
 // Outbox and the case study are hidden for now, so they stay out of the sitemap.
 // To bring them back, restore the imports and entries below.
 // import { getPosts } from "@/lib/outbox";
@@ -20,6 +20,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 1,
+    },
+    {
+      url: `${SITE_URL}${SERVICES_PATH}`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.9,
     },
     // { url: `${SITE_URL}/work/chynabazar`, changeFrequency: "yearly", priority: 0.8 },
     // { url: `${SITE_URL}/outbox`, changeFrequency: "weekly", priority: 0.7 },

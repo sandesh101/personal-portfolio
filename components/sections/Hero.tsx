@@ -41,7 +41,7 @@ export function Hero() {
             className="flex min-w-0 flex-[1_1_280px] flex-col gap-5"
           >
             <p className="text-[17px] text-muted">
-              Flutter developer and backend engineer in Kathmandu. I build with
+              Flutter developer and backend engineer in Kathmandu, Nepal. I build with
               Flutter, NestJS and Next.js, and I&apos;m also a programming
               instructor.
             </p>
