@@ -2,22 +2,41 @@
 
 import { useEffect, useRef, useState } from "react";
 
-/** Autoplaying showcase with a visible pause control; stays paused for reduced-motion visitors. */
+const SRC = "/work/chynabazar-showcase.mp4";
+
+/**
+ * Showcase video with a visible pause control. The file is not requested until the video is close to
+ * the viewport (until then the poster shows), and it never autoplays for reduced-motion visitors.
+ */
 export function ShowcaseVideo() {
   const ref = useRef<HTMLVideoElement>(null);
-  const [playing, setPlaying] = useState(true);
+  const [playing, setPlaying] = useState(false);
 
   useEffect(() => {
-    if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      ref.current?.pause();
-    }
+    const v = ref.current;
+    if (!v) return;
+    const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (!e.isIntersecting) return;
+        io.disconnect();
+        if (reduced) return;
+        v.src = SRC;
+        void v.play();
+      },
+      { rootMargin: "300px" },
+    );
+    io.observe(v);
+    return () => io.disconnect();
   }, []);
 
   function toggle() {
     const v = ref.current;
     if (!v) return;
-    if (v.paused) void v.play();
-    else v.pause();
+    if (v.paused) {
+      if (!v.getAttribute("src")) v.src = SRC;
+      void v.play();
+    } else v.pause();
   }
 
   return (
@@ -26,17 +45,15 @@ export function ShowcaseVideo() {
         <video
           ref={ref}
           className="block aspect-[5/4] w-full object-cover"
-          autoPlay
           loop
           muted
           playsInline
-          onPlay={() => setPlaying(true)}
-          onPause={() => setPlaying(false)}
+          preload="none"
           poster="/work/chynabazar-storefront-wide.webp"
           aria-label="Chynabazar product showcase"
-        >
-          <source src="/work/chynabazar-showcase.mp4" type="video/mp4" />
-        </video>
+          onPlay={() => setPlaying(true)}
+          onPause={() => setPlaying(false)}
+        />
       </div>
       <button
         type="button"

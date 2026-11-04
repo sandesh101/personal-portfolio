@@ -7,6 +7,9 @@ import { SERVICES_PATH, SITE_URL } from "@/lib/site";
 // Needed when the site is exported as static files.
 export const dynamic = "force-static";
 
+// Bump this when the page content changes. A date that moves on every deploy is ignored by search engines.
+const UPDATED = new Date("2026-11-04T00:00:00Z");
+
 export default function sitemap(): MetadataRoute.Sitemap {
   // const posts = getPosts()
   //   .filter((p) => !p.sample)
@@ -17,13 +20,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
       url: SITE_URL,
-      lastModified: new Date(),
+      lastModified: UPDATED,
       changeFrequency: "monthly",
       priority: 1,
     },
     {
       url: `${SITE_URL}${SERVICES_PATH}`,
-      lastModified: new Date(),
+      lastModified: UPDATED,
       changeFrequency: "monthly",
       priority: 0.9,
     },

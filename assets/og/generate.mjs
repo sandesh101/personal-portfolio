@@ -23,5 +23,5 @@ g.font = "600 52px Plex";
 g.fillText("Sandesh Rimal", 80, 530);
 g.fillStyle = "#595959";
 g.font = "600 34px Plex";
-g.fillText("Flutter developer and backend engineer", 80, 580);
+g.fillText("Flutter & mobile app developer · Kathmandu, Nepal", 80, 580);
 await c.toFile(`${repo}/app/opengraph-image.png`);
