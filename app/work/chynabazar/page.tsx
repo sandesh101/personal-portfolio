@@ -5,6 +5,7 @@ import { BrowserFrame, PhoneFrame } from "@/components/DeviceFrames";
 import { MiniFooter } from "@/components/Footers";
 import { outlineLink, SimpleHeader } from "@/components/SimpleHeader";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { formatDate } from "@/lib/outbox";
 import {
   CASE_STUDY_DATE,
   CASE_STUDY_LIVE,
@@ -43,6 +44,7 @@ export const metadata: Metadata = {
 const meta = [
   ["Role", "Led and built the Flutter mobile app; built NestJS backend modules"],
   ["Team", "A small team"],
+  ["Author", "Sandesh Rimal, Flutter developer and backend engineer in Kathmandu, Nepal"],
   ["Timeline", "Delivered in about 5–6 months"],
   ["Stack", "Flutter, Bloc, NestJS, TypeScript, Next.js"],
   ["Outcome", "500+ downloads on Google Play"],
@@ -201,7 +203,7 @@ const section = "py-[clamp(56px,7vw,96px)]";
 const stats = [
   ["500+", "downloads on Google Play"],
   ["5–6 mo", "to deliver the platform"],
-  ["1", "NestJS backend behind the app and storefront"],
+  ["1", "backend for the app and storefront"],
   [String(modules.length), "backend modules I built"],
 ];
 
@@ -251,13 +253,20 @@ export default function ChynabazarCaseStudy() {
                 </ol>
               </nav>
 
-              <div className="mt-6 grid items-center gap-x-[clamp(32px,5vw,72px)] gap-y-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
+              <div className="mt-6 grid items-center gap-x-[clamp(32px,5vw,72px)] gap-y-8 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)]">
                 <div>
-                  <p className={eyebrow}>Case study · 2026</p>
+                  <p className={eyebrow}>
+                    Case study · By{" "}
+                    <Link href="/#about" className="underline underline-offset-4">
+                      Sandesh Rimal
+                    </Link>{" "}
+                    · <time dateTime={CASE_STUDY_DATE}>{formatDate(CASE_STUDY_DATE)}</time>
+                  </p>
                   <h1 className="mt-3 text-[clamp(34px,3.8vw,54px)] leading-[1.04] font-semibold tracking-[-0.035em]">
                     Chynabazar: a Flutter and NestJS{" "}
                     <span className="whitespace-nowrap">e-commerce</span> platform
                   </h1>
+
                   <p className="mt-5 max-w-[620px] text-[clamp(17px,1.4vw,19px)] leading-[1.5]">
                     An online store with one NestJS backend behind a Flutter app for shoppers and a
                     Next.js storefront. I led the Flutter mobile app, which I built on my own, and I
@@ -276,7 +285,7 @@ export default function ChynabazarCaseStudy() {
                 </div>
 
                 <figure className="max-sm:hidden">
-                  <div className="relative rounded-md bg-accent-tint px-[clamp(14px,2.4vw,32px)] pt-[clamp(14px,2.4vw,32px)] pb-[clamp(36px,5vw,64px)]">
+                  <div className="relative rounded-md bg-accent-tint px-[clamp(12px,1.8vw,22px)] pt-[clamp(12px,1.8vw,22px)] pb-[clamp(28px,3.4vw,44px)]">
                     <BrowserFrame label="Chynabazar web storefront">
                       <Image
                         src="/work/chynabazar-storefront-wide.webp"
@@ -293,10 +302,10 @@ export default function ChynabazarCaseStudy() {
                       alt="Chynabazar shopper app home screen on a phone"
                       sizes="160px"
                       priority
-                      className="absolute -bottom-2 right-5 w-[28%] max-w-[170px] sm:right-8 motion-safe:transition-transform motion-safe:duration-300 motion-safe:hover:-translate-y-2"
+                      className="absolute -bottom-2 right-5 w-[25%] max-w-[150px] sm:right-8 motion-safe:transition-transform motion-safe:duration-300 motion-safe:hover:-translate-y-2"
                     />
                   </div>
-                  <figcaption className="mono-label mt-5">The Chynabazar web storefront and shopper app</figcaption>
+                  <figcaption className="mono-label mt-4">The Chynabazar web storefront and shopper app</figcaption>
                 </figure>
               </div>
             </div>
@@ -320,9 +329,9 @@ export default function ChynabazarCaseStudy() {
                   </div>
                 ))}
               </dl>
-              <dl className="grid border-t border-line py-5 sm:grid-cols-3 sm:gap-x-8">
+              <dl className="grid border-t border-line py-5 sm:grid-cols-2 sm:gap-x-8 lg:grid-cols-4">
                 {meta
-                  .filter(([k]) => ["Role", "Team", "Stack"].includes(k))
+                  .filter(([k]) => ["Role", "Team", "Stack", "Author"].includes(k))
                   .map(([k, v]) => (
                     <div key={k} className="py-2">
                       <dt className="mono-label">{k}</dt>
@@ -517,7 +526,7 @@ export default function ChynabazarCaseStudy() {
             <div className="wrap flex flex-wrap items-end justify-between gap-x-12 gap-y-8">
               <div>
                 <p className="mono-label !text-inv-muted">06 — Outcome</p>
-                <h2 id="outcome" className="sr-only">Outcome</h2>
+                <h2 id="outcome" className="sr-only">Outcome: 500+ downloads on Google Play</h2>
                 <p className="mt-3 text-[clamp(72px,11vw,160px)] leading-none font-semibold tracking-[-0.04em]">
                   500+
                 </p>
