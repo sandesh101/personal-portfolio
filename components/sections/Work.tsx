@@ -1,5 +1,5 @@
-// import Link from "next/link"; // needed again when the case-study button is restored
-import { ext, LINKS } from "@/lib/site";
+import Link from "next/link";
+import { CASE_STUDY_BUTTON, CASE_STUDY_PATH, ext, LINKS } from "@/lib/site";
 import { ShowcaseVideo } from "../ShowcaseVideo";
 
 const facts = [
@@ -62,8 +62,8 @@ export function Work() {
               </h2>
               <p className="mt-6 max-w-[560px] text-[clamp(17px,1.5vw,20px)] leading-[1.5]">
                 An <span className="whitespace-nowrap">e-commerce</span> platform.
-                One NestJS backend serves Flutter apps for shoppers and
-                warehouse staff, and a Next.js storefront.
+                One NestJS backend serves a Flutter app for shoppers and a
+                Next.js storefront.
               </p>
               <dl className="mt-7 border-t border-line">
                 {facts.map(([k, v]) => (
@@ -83,14 +83,15 @@ export function Work() {
                 </div>
               </dl>
               <div className="mt-7 flex flex-wrap gap-2.5">
-                {/* Case study is hidden for now.
-                <Link href="/work/chynabazar" className="btn btn-solid">
-                  Read the case study →
-                </Link> */}
+                {CASE_STUDY_BUTTON && (
+                  <Link href={CASE_STUDY_PATH} className="btn btn-solid">
+                    Read the case study →
+                  </Link>
+                )}
                 <a
                   href={LINKS.chynabazarPlay}
                   {...ext(LINKS.chynabazarPlay)}
-                  className="btn btn-solid"
+                  className={`btn ${CASE_STUDY_BUTTON ? "btn-outline" : "btn-solid"}`}
                 >
                   Google Play ↗
                 </a>

@@ -1,7 +1,7 @@
 import { EMAIL, ext, LINKS } from "@/lib/site";
 import { ContactForm } from "../ContactForm";
 
-export function Contact() {
+export function Contact({ n }: { n: string }) {
   return (
     <section
       id="contact"
@@ -9,7 +9,7 @@ export function Contact() {
     >
       <div className="wrap">
         <p data-reveal className="mono-label">
-          05 — Contact
+          {n} — Contact
         </p>
         <h2
           data-reveal

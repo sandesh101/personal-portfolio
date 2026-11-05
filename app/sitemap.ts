@@ -1,8 +1,12 @@
 import type { MetadataRoute } from "next";
-import { SERVICES_PATH, SITE_URL } from "@/lib/site";
-// Outbox and the case study are hidden for now, so they stay out of the sitemap.
-// To bring them back, restore the imports and entries below.
-// import { getPosts } from "@/lib/outbox";
+import { getPublishedPosts } from "@/lib/outbox";
+import {
+  CASE_STUDY_LIVE,
+  CASE_STUDY_MODIFIED,
+  CASE_STUDY_PATH,
+  SERVICES_PATH,
+  SITE_URL,
+} from "@/lib/site";
 
 // Needed when the site is exported as static files.
 export const dynamic = "force-static";
@@ -11,12 +15,10 @@ export const dynamic = "force-static";
 const UPDATED = new Date("2026-11-04T00:00:00Z");
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  // const posts = getPosts()
-  //   .filter((p) => !p.sample)
-  //   .map((p) => ({
-  //     url: `${SITE_URL}/outbox/${p.slug}`,
-  //     lastModified: new Date(`${p.date}T00:00:00Z`),
-  //   }));
+  const posts = getPublishedPosts().map((p) => ({
+    url: `${SITE_URL}/outbox/${p.slug}`,
+    lastModified: new Date(`${p.date}T00:00:00Z`),
+  }));
   return [
     {
       url: SITE_URL,
@@ -30,8 +32,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.9,
     },
-    // { url: `${SITE_URL}/work/chynabazar`, changeFrequency: "yearly", priority: 0.8 },
-    // { url: `${SITE_URL}/outbox`, changeFrequency: "weekly", priority: 0.7 },
-    // ...posts,
+    ...(CASE_STUDY_LIVE
+      ? [
+          {
+            url: `${SITE_URL}${CASE_STUDY_PATH}`,
+            lastModified: new Date(`${CASE_STUDY_MODIFIED}T00:00:00Z`),
+            changeFrequency: "yearly" as const,
+            priority: 0.8,
+          },
+        ]
+      : []),
+    ...(posts.length
+      ? [
+          { url: `${SITE_URL}/outbox`, lastModified: new Date(posts[0].lastModified), changeFrequency: "weekly" as const, priority: 0.7 },
+          ...posts,
+        ]
+      : []),
   ];
 }

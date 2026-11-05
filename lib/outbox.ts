@@ -66,6 +66,13 @@ export function getPosts(): Post[] {
     .sort((a, b) => b.date.localeCompare(a.date) || b.id.localeCompare(a.id));
 }
 
+/** Real posts only. The Outbox shows up on the site once there is at least one. */
+export function getPublishedPosts(): Post[] {
+  return getPosts().filter((p) => !p.sample);
+}
+
+export const hasPublishedPosts = () => getPublishedPosts().length > 0;
+
 export function getPost(slug: string) {
   return getPosts().find((p) => p.slug === slug);
 }

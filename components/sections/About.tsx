@@ -1,4 +1,6 @@
 import Image from "next/image";
+import Link from "next/link";
+import { CASE_STUDY_LIVE, CASE_STUDY_PATH } from "@/lib/site";
 
 const jobs = [
   {
@@ -6,6 +8,7 @@ const jobs = [
     role: "Flutter Developer",
     org: "DarviLab Pvt. Ltd.",
     note: "Flutter apps for Chynabazar and Najik.",
+    caseStudy: CASE_STUDY_LIVE ? CASE_STUDY_PATH : undefined,
   },
   {
     when: "Jul 2023 – now",
@@ -76,6 +79,14 @@ export function About() {
                   </span>
                   <span className="block text-[15px] text-muted">{j.org}</span>
                   <span className="mt-1.5 block text-[15px]">{j.note}</span>
+                  {j.caseStudy && (
+                    <Link
+                      href={j.caseStudy}
+                      className="mt-1 inline-flex min-h-11 items-center text-[15px] underline underline-offset-4"
+                    >
+                      Read the Chynabazar case study →
+                    </Link>
+                  )}
                 </span>
               </li>
             ))}

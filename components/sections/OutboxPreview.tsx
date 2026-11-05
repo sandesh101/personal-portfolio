@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { formatDate, getPosts } from "@/lib/outbox";
+import { formatDate, getPublishedPosts } from "@/lib/outbox";
 
 export function OutboxPreview() {
-  const posts = getPosts().slice(0, 5);
+  const posts = getPublishedPosts().slice(0, 5);
   return (
     <section
       id="outbox"
@@ -15,7 +15,7 @@ export function OutboxPreview() {
           className="flex flex-wrap items-end justify-between gap-5"
         >
           <div className="min-w-0 flex-[1_1_520px]">
-            <p className="mono-label">04 — Outbox</p>
+            <p className="mono-label">05 — Outbox</p>
             <h2
               id="outbox-h"
               className="mt-3 text-[clamp(34px,4.6vw,64px)] leading-[1.02] font-medium tracking-[-0.03em]"

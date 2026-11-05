@@ -3,11 +3,11 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { EMAIL, ext, LINKS, NAV } from "@/lib/site";
+import { EMAIL, ext, LINKS, type NavItem } from "@/lib/site";
 import { Brand } from "./Brand";
 import { ThemeToggle } from "./ThemeToggle";
 
-export function HomeHeader() {
+export function HomeHeader({ nav }: { nav: NavItem[] }) {
   const [open, setOpen] = useState(false);
   const menuBtn = useRef<HTMLButtonElement>(null);
   const closeBtn = useRef<HTMLButtonElement>(null);
@@ -38,9 +38,9 @@ export function HomeHeader() {
           <Brand href="#top" />
           <nav
             aria-label="Primary"
-            className="hidden items-center gap-0.5 min-[1024px]:flex"
+            className="hidden items-center gap-0.5 min-[1180px]:flex"
           >
-            {NAV.map((n) => (
+            {nav.map((n) => (
               <a
                 key={n.href}
                 href={n.href}
@@ -74,7 +74,7 @@ export function HomeHeader() {
               type="button"
               onClick={() => setOpen(true)}
               aria-label="Open menu"
-              className="h-11 cursor-pointer rounded-md border border-ink bg-transparent px-3.5 text-sm font-medium text-ink min-[1024px]:hidden"
+              className="h-11 cursor-pointer rounded-md border border-ink bg-transparent px-3.5 text-sm font-medium text-ink min-[1180px]:hidden"
             >
               Menu
             </button>
@@ -90,7 +90,7 @@ export function HomeHeader() {
         data-open={open}
         data-lenis-prevent
        
-        className="menu-sheet fixed inset-0 z-60 flex flex-col overflow-auto bg-bg px-5 pb-7 min-[1024px]:hidden"
+        className="menu-sheet fixed inset-0 z-60 flex flex-col overflow-auto bg-bg px-5 pb-7 min-[1180px]:hidden"
       >
         <div className="flex h-16 items-center justify-between border-b border-line">
           <span lang="ne" className="font-deva text-[21px] font-bold">
@@ -107,7 +107,7 @@ export function HomeHeader() {
           </button>
         </div>
         <nav aria-label="Mobile" className="flex flex-col">
-          {NAV.map((n, i) => (
+          {nav.map((n, i) => (
             <motion.a
               key={n.href}
               href={n.href}

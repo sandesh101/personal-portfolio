@@ -21,16 +21,34 @@ export const LINKS = {
   resume: "/Sandesh-Rimal-CV.pdf",
 };
 
-export const NAV = [
-  { num: "01", label: "Work", href: "#work" },
-  { num: "02", label: "Services", href: "#services" },
-  { num: "03", label: "Stack", href: "#stack" },
-  { num: "04", label: "About", href: "#about" },
-  // Outbox is hidden for now. To bring it back: restore this line, make Contact "06", and restore the
-  // <OutboxPreview /> in app/page.tsx, the "05 — Contact" label, the sitemap entries and the case-study button.
-  // { num: "04", label: "Outbox", href: "#outbox" },
-  { num: "05", label: "Contact", href: "#contact" },
-];
+export type NavItem = { num: string; label: string; href: string };
+
+/** Section links, numbered in page order. The Outbox appears once it has a real post. */
+export function navItems(outbox: boolean): NavItem[] {
+  const items = [
+    ["Work", "#work"],
+    ["Services", "#services"],
+    ["Stack", "#stack"],
+    ["About", "#about"],
+    ...(outbox ? [["Outbox", "#outbox"]] : []),
+    ["Contact", "#contact"],
+  ];
+  return items.map(([label, href], i) => ({
+    num: String(i + 1).padStart(2, "0"),
+    label,
+    href,
+  }));
+}
+
+/** Flip to true to publish the Chynabazar case study: indexed, in the sitemap, and linked from the site. */
+export const CASE_STUDY_LIVE = true;
+export const CASE_STUDY_PATH = "/work/chynabazar";
+/** The Work button also shows while running `npm run dev`, so the draft can be reached. Never in a production build. */
+export const CASE_STUDY_BUTTON =
+  CASE_STUDY_LIVE || process.env.NODE_ENV === "development";
+/** First published. Update CASE_STUDY_MODIFIED whenever the content changes. */
+export const CASE_STUDY_DATE = "2026-11-05";
+export const CASE_STUDY_MODIFIED = "2026-11-05";
 
 export const rssAlternates = { "application/rss+xml": "/outbox/rss.xml" };
 
