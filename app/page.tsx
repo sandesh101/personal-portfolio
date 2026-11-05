@@ -5,16 +5,19 @@ import { PageAnimations } from "@/components/PageAnimations";
 import { About } from "@/components/sections/About";
 import { Contact } from "@/components/sections/Contact";
 import { Hero } from "@/components/sections/Hero";
-// Outbox is hidden for now.
-// import { OutboxPreview } from "@/components/sections/OutboxPreview";
+import { OutboxPreview } from "@/components/sections/OutboxPreview";
 import { Services } from "@/components/sections/Services";
 import { Stack } from "@/components/sections/Stack";
 import { StatusBar } from "@/components/sections/StatusBar";
 import { Work } from "@/components/sections/Work";
-import { SITE_DESCRIPTION, SITE_TITLE } from "@/lib/site";
+import { hasPublishedPosts } from "@/lib/outbox";
+import { navItems, rssAlternates, SITE_DESCRIPTION, SITE_TITLE } from "@/lib/site";
 
-export const metadata: Metadata = {
-  alternates: { canonical: "/" }, // add types: rssAlternates (from "@/lib/site") when Outbox is back
+export const generateMetadata = (): Metadata => ({
+  alternates: {
+    canonical: "/",
+    ...(hasPublishedPosts() ? { types: rssAlternates } : {}),
+  },
   openGraph: {
     type: "website",
     siteName: "Sandesh Rimal",
@@ -36,13 +39,16 @@ export const metadata: Metadata = {
     description: SITE_DESCRIPTION,
     images: ["/opengraph-image.png"],
   },
-};
+});
 
 export default function Home() {
+  // The Outbox section and its nav link appear once there is a real (non-sample) post.
+  const outbox = hasPublishedPosts();
+  const nav = navItems(outbox);
   return (
     <>
       <StatusBar />
-      <HomeHeader />
+      <HomeHeader nav={nav} />
       <main id="main">
         <PageAnimations />
         <Hero />
@@ -50,10 +56,10 @@ export default function Home() {
         <Services />
         <Stack />
         <About />
-        {/* <OutboxPreview /> */}
-        <Contact />
+        {outbox && <OutboxPreview />}
+        <Contact n={nav.find((i) => i.label === "Contact")!.num} />
       </main>
-      <HomeFooter />
+      <HomeFooter nav={nav} />
     </>
   );
 }

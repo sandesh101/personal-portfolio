@@ -1,12 +1,20 @@
 import Link from "next/link";
-import { EMAIL, ext, LINKS, NAV, SERVICES_PATH } from "@/lib/site";
+import {
+  CASE_STUDY_LIVE,
+  CASE_STUDY_PATH,
+  EMAIL,
+  ext,
+  LINKS,
+  type NavItem,
+  SERVICES_PATH,
+} from "@/lib/site";
 import { KtmClock } from "./KtmClock";
 
 const stripLink = "inline-flex min-h-11 items-center";
 const strip =
   "mono-label wrap flex flex-wrap items-center justify-between gap-x-7 gap-y-2";
 
-export function HomeFooter() {
+export function HomeFooter({ nav }: { nav: NavItem[] }) {
   return (
     <footer className="border-t border-line pt-[clamp(48px,6vw,80px)] pb-6">
       <div className="wrap">
@@ -24,7 +32,7 @@ export function HomeFooter() {
           </div>
           <nav aria-label="Footer" className="flex flex-[0_1_240px] flex-col">
             <p className="mono-label mb-1">Site</p>
-            {NAV.map((n) => (
+            {nav.map((n) => (
               <a key={n.href} href={n.href} className={stripLink}>
                 {n.label}
               </a>
@@ -32,6 +40,11 @@ export function HomeFooter() {
             <Link href={SERVICES_PATH} className={stripLink}>
               Mobile app development in Nepal
             </Link>
+            {CASE_STUDY_LIVE && (
+              <Link href={CASE_STUDY_PATH} className={stripLink}>
+                Chynabazar case study
+              </Link>
+            )}
           </nav>
           <div className="flex min-w-0 flex-[0_1_220px] flex-col">
             <p className="mono-label mb-1">Elsewhere</p>

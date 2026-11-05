@@ -3,7 +3,7 @@ import Link from "next/link";
 import { MiniFooter } from "@/components/Footers";
 import { outlineLink, SimpleHeader } from "@/components/SimpleHeader";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { EMAIL, ext, LINKS, SERVICES_PATH } from "@/lib/site";
+import { CASE_STUDY_LIVE, CASE_STUDY_PATH, EMAIL, ext, LINKS, SERVICES_PATH } from "@/lib/site";
 
 const title = "Mobile app development in Nepal";
 const description =
@@ -139,9 +139,18 @@ export default function MobileAppDevelopmentNepal() {
               >
                 Chynabazar
               </a>
-              , an e-commerce platform with Flutter apps for shoppers and
-              warehouse staff, a Next.js storefront and one NestJS backend. It
-              has 500+ downloads on Google Play.
+              , an e-commerce platform with a Flutter shopper app, a Next.js
+              storefront and one NestJS backend. The app has 500+ downloads on
+              Google Play.
+              {CASE_STUDY_LIVE && (
+                <>
+                  {" "}
+                  <Link href={CASE_STUDY_PATH} className="underline underline-offset-4">
+                    Read the Chynabazar case study
+                  </Link>
+                  .
+                </>
+              )}
             </p>
           </div>
         </section>

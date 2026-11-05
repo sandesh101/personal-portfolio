@@ -5,14 +5,15 @@ import { OutboxBrowser } from "@/components/OutboxBrowser";
 import { SimpleHeader } from "@/components/SimpleHeader";
 import { SubscribeForm } from "@/components/SubscribeForm";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { formatDate, getPosts } from "@/lib/outbox";
+import { formatDate, getPosts, getPublishedPosts, hasPublishedPosts } from "@/lib/outbox";
 import { EMAIL, rssAlternates } from "@/lib/site";
 
 const description =
   "Things I've learned building Flutter apps and NestJS APIs, and from teaching both. Every post is sent like a message.";
 
-export const metadata: Metadata = {
+export const generateMetadata = (): Metadata => ({
   title: "Outbox",
+  robots: hasPublishedPosts() ? undefined : { index: false }, // only the layout sample exists so far
   description,
   alternates: { canonical: "/outbox", types: rssAlternates },
   openGraph: {
@@ -22,10 +23,10 @@ export const metadata: Metadata = {
     title: "Outbox — Sandesh Rimal",
     description,
   },
-};
+});
 
 export default function OutboxPage() {
-  const posts = getPosts();
+  const posts = hasPublishedPosts() ? getPublishedPosts() : getPosts();
   const items = posts.map((p) => ({
     slug: p.slug,
     id: p.id,
