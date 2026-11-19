@@ -8,7 +8,7 @@ import { CASE_STUDY_LIVE, CASE_STUDY_PATH, EMAIL, ext, LINKS, SERVICES_PATH } fr
 
 const title = "Mobile app development in Nepal";
 const description =
-  "Flutter developer and backend engineer in Kathmandu, Nepal. I build Android and iOS apps and the NestJS servers behind them, from first screen to production.";
+  "Full-stack Flutter developer in Kathmandu, Nepal. I build Android and iOS apps with Flutter and the NestJS backends behind them, from first screen to production.";
 
 export const metadata: Metadata = {
   title,
@@ -105,7 +105,7 @@ export default function MobileAppDevelopmentNepal() {
               {title}
             </h1>
             <p className="mt-8 max-w-[680px] text-[clamp(18px,1.8vw,22px)] leading-[1.5]">
-              I&apos;m Sandesh Rimal, a Flutter developer and backend engineer
+              I&apos;m Sandesh Rimal, a full-stack Flutter developer
               in Kathmandu, Nepal. I build mobile apps for Android and iOS, and
               the servers behind them, from first screen to production.
             </p>
@@ -158,6 +158,26 @@ export default function MobileAppDevelopmentNepal() {
                 </>
               )}
             </p>
+          </div>
+        </section>
+
+        <section className="border-t border-line py-[clamp(48px,7vw,96px)]">
+          <div className="wrap">
+            <h2 className="mono-label">At a glance</h2>
+            <dl className="mt-6 max-w-[680px] border-t border-ink text-[17px]">
+              {[
+                ["Based in", "Kathmandu, Nepal"],
+                ["Builds", "Flutter apps for Android and iOS, and the NestJS or Node.js backend behind them"],
+                ["Stack", "Flutter, Dart, Bloc, Riverpod, NestJS, Node.js, TypeScript, PostgreSQL, MongoDB, MySQL"],
+                ["Reply time", "Usually within a day"],
+                ["Contact", EMAIL],
+              ].map(([k, v]) => (
+                <div key={k} className="flex gap-5 border-b border-line py-4">
+                  <dt className="mono-label w-24 flex-none pt-1">{k}</dt>
+                  <dd className="m-0">{v}</dd>
+                </div>
+              ))}
+            </dl>
           </div>
         </section>
 

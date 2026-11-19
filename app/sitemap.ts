@@ -12,7 +12,7 @@ import {
 export const dynamic = "force-static";
 
 // Bump this when the page content changes. A date that moves on every deploy is ignored by search engines.
-const UPDATED = new Date("2026-11-04T00:00:00Z");
+const UPDATED = new Date("2026-11-19T00:00:00Z");
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const posts = getPublishedPosts().map((p) => ({

@@ -77,7 +77,7 @@ const person = {
   url: SITE_URL,
   image: `${SITE_URL}/work/sandesh-portrait.webp`,
   email: `mailto:${EMAIL}`,
-  jobTitle: "Flutter developer and backend engineer",
+  jobTitle: "Full-stack Flutter developer",
   description,
   address: {
     "@type": "PostalAddress",
@@ -92,7 +92,7 @@ const person = {
     "Node.js",
     "TypeScript",
   ],
-  sameAs: [LINKS.github, LINKS.linkedin],
+  sameAs: [LINKS.github, LINKS.linkedin, LINKS.tiktok],
 };
 
 const service = {

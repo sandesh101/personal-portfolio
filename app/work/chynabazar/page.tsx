@@ -44,7 +44,7 @@ export const metadata: Metadata = {
 const meta = [
   ["Role", "Led and built the Flutter mobile app; built NestJS backend modules"],
   ["Team", "A small team"],
-  ["Author", "Sandesh Rimal, Flutter developer and backend engineer in Kathmandu, Nepal"],
+  ["Author", "Sandesh Rimal, full-stack Flutter developer in Kathmandu, Nepal"],
   ["Timeline", "Delivered in about 5–6 months"],
   ["Stack", "Flutter, Bloc, NestJS, TypeScript, Next.js"],
   ["Outcome", "500+ downloads on Google Play"],
