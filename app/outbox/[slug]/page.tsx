@@ -6,8 +6,8 @@ import { MiniFooter } from "@/components/Footers";
 import { mdxComponents } from "@/components/mdx";
 import { outlineLink, SimpleHeader } from "@/components/SimpleHeader";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { formatDate, getHeadings, getPost, getPosts, getPublishedPosts } from "@/lib/outbox";
-import { EMAIL } from "@/lib/site";
+import { formatDate, getFaqs, getHeadings, getPost, getPosts, getPublishedPosts } from "@/lib/outbox";
+import { EMAIL, SITE_URL } from "@/lib/site";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -49,6 +49,40 @@ export default async function PostPage({ params }: Props) {
   const newer = all[i - 1];
   const older = all[i + 1];
   const headings = getHeadings(post.content);
+  const url = `${SITE_URL}/outbox/${post.slug}`;
+  const faqs = getFaqs(post.content);
+  const schema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BlogPosting",
+        "@id": `${url}#post`,
+        headline: post.title,
+        description: post.excerpt,
+        url,
+        mainEntityOfPage: url,
+        datePublished: post.date,
+        dateModified: post.date,
+        articleSection: post.channel,
+        inLanguage: "en",
+        image: `${SITE_URL}/opengraph-image.png`,
+        author: { "@id": `${SITE_URL}/#person` },
+        publisher: { "@id": `${SITE_URL}/#person` },
+      },
+      ...(faqs.length
+        ? [
+            {
+              "@type": "FAQPage",
+              mainEntity: faqs.map((f) => ({
+                "@type": "Question",
+                name: f.q,
+                acceptedAnswer: { "@type": "Answer", text: f.a },
+              })),
+            },
+          ]
+        : []),
+    ],
+  };
   const reply = `mailto:${EMAIL}?subject=${encodeURIComponent(`Re: ${post.title}`)}`;
 
   return (
@@ -186,6 +220,14 @@ export default async function PostPage({ params }: Props) {
       </main>
 
       <MiniFooter links={[{ label: "RSS", href: "/outbox/rss.xml" }]} />
+      {!post.sample && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(schema).replace(/</g, "\\u003c"),
+          }}
+        />
+      )}
     </>
   );
 }

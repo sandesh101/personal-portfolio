@@ -97,3 +97,12 @@ export function getHeadings(content: string) {
   }
   return out;
 }
+
+/** Question/answer pairs from <Faq q="..."> blocks, as plain text for FAQPage schema. */
+export function getFaqs(content: string) {
+  const plain = (s: string) =>
+    s.replace(/\[([^\]]+)\]\([^)]*\)/g, "$1").replace(/[*`]/g, "").replace(/\s+/g, " ").trim();
+  return [...content.matchAll(/<Faq q="([^"]+)">\s*([\s\S]*?)\s*<\/Faq>/g)].map(
+    (m) => ({ q: m[1], a: plain(m[2]) }),
+  );
+}
