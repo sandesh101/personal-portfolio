@@ -1,0 +1,227 @@
+---
+id: "#003"
+title: "How to Learn Flutter in 2027 (With AI as Your Tutor)"
+channel: Teaching
+route: /notes/teaching
+date: "2026-11-19"
+excerpt: "What Flutter is, what it builds, and a step-by-step 2027 learning plan, including how to use AI as a tutor without skipping the fundamentals."
+sample: false
+---
+
+Flutter is one of the fastest ways to go from "I want to build an app" to an app running on a real phone. In 2027 the hard part is not finding tutorials. There are too many. The hard part is choosing a path, and deciding what to hand to AI and what to learn yourself.
+
+This guide covers what Flutter is, what it can build, a realistic learning roadmap, and a way to use AI that makes you better instead of dependent.
+
+## What is Flutter?
+
+Flutter is an open-source UI toolkit from Google for building apps from a single codebase. You write the app once in **Dart**, Flutter's programming language, and ship it to Android, iOS, web, Windows, macOS and Linux.
+
+Three ideas explain why people like it:
+
+- **Everything is a widget.** Buttons, text, padding, layouts and whole screens are all widgets, composed like building blocks.
+- **It draws its own UI.** Flutter uses its own rendering engine instead of wrapping each platform's native controls. That is why an app looks and behaves the same on every device.
+- **Hot reload.** Change the code and see the result in the running app in about a second, without restarting. It makes learning fast, because the feedback loop is short.
+
+## What can you build with Flutter?
+
+- Mobile apps for Android and iOS: shopping, booking, delivery, fintech, social and education apps.
+- Apps with custom, animated, branded interfaces.
+- Internal tools and dashboards for web and desktop.
+- MVPs, where one codebase gets a product in front of users sooner.
+
+It is a weaker fit for apps built around deep platform features such as home-screen widgets, ARKit or advanced background hardware work. For that decision, read [native or cross-platform: six questions that decide it](/outbox/native-or-cross-platform).
+
+## Is Flutter worth learning in 2027?
+
+For most beginners, yes, with an honest caveat.
+
+**Why it is worth it:**
+
+- One language and one codebase get you a working app on two stores.
+- The tooling is mature and the official documentation is strong.
+- Dart is easy to read if you know JavaScript, Java, C# or Kotlin.
+- The skills carry over: state management, APIs, testing and architecture apply to any mobile stack.
+
+**The caveat:** demand for Flutter varies by country and by company. Check local job boards and freelance platforms before committing, and treat Flutter as a way to learn app development, not a guarantee of a job.
+
+## How to learn Flutter in 2027: a 12-week roadmap
+
+Plan on one to two hours a day. Developers who already know another language can move faster.
+
+### Phase 0: Setup (days 1–3)
+
+- Install Flutter and run `flutter doctor` until everything is green.
+- Run the default counter app on an emulator, then on a real phone.
+- Try [DartPad](https://dartpad.dev) to write Dart in the browser with no setup.
+
+### Phase 1: Dart fundamentals (weeks 1–2)
+
+Learn the language before the framework:
+
+- variables, types and null safety
+- functions, classes and collections
+- `async`, `await`, `Future` and `Stream`
+- modern Dart features: records, patterns and sealed classes
+
+Use the [Dart documentation](https://dart.dev/docs) as the main reference.
+
+### Phase 2: Widgets and layout (weeks 3–4)
+
+- `StatelessWidget` and `StatefulWidget`
+- `Row`, `Column`, `Stack`, `ListView` and `Container`
+- Material 3 and theming
+- responsive layouts for different screen sizes
+
+Build static screens by copying real app interfaces. Do not worry about data yet.
+
+### Phase 3: State and navigation (weeks 5–6)
+
+- Start with `setState` and understand why it stops being enough.
+- Pick **one** state management approach: Riverpod, Bloc or Provider. Learn it well instead of sampling all three.
+- Add navigation with `go_router`.
+
+### Phase 4: Data and backend (weeks 7–8)
+
+- Call a REST API with `http` or `dio`, and parse JSON into typed models.
+- Store data locally.
+- Add authentication and a database through Firebase or your own backend.
+
+### Phase 5: Ship (weeks 9–12)
+
+- Write unit and widget tests.
+- Profile and fix slow screens.
+- Build two or three complete apps rather than twenty tutorials.
+- Publish one to a store. The [app-store rejection checklist](/outbox/app-store-rejection-checklist) covers what reviewers check.
+
+## How to use AI to learn Flutter
+
+AI is the biggest change to how people learn programming, and it cuts both ways. Used well, it is a patient tutor available at any hour. Used badly, it writes code you can't explain, and you stop improving.
+
+The rule that keeps it useful: **AI explains, reviews and unblocks. You write the first version.**
+
+### A learning loop that works
+
+1. **Read or watch** the concept from the official docs.
+2. **Write it yourself**, even if it is rough.
+3. **Ask AI to review it**, not to replace it.
+4. **Ask why**, then ask for one alternative and the trade-off.
+5. **Rewrite it** without looking.
+
+### Prompts worth copying
+
+```text
+Explain how StatefulWidget rebuilds work. I know basic Dart. Use a small example.
+
+Here is my code. Do not rewrite it. List the three biggest problems and explain each.
+
+Here is the error and the widget that causes it. Explain what the error means before suggesting a fix.
+
+Quiz me on Dart null safety with five questions. Give the answers only after I reply.
+
+Give me three app ideas at my level, with a feature list for each, but no code.
+```
+
+### What to hand to AI, and what not to
+
+**Good uses:**
+
+- explaining errors and unfamiliar code
+- reviewing your code for bugs and readability
+- generating boilerplate you already understand
+- writing test cases and quizzes
+- comparing two approaches
+
+**Risky uses:**
+
+- generating whole screens you never read
+- copying code you can't explain
+- trusting a package name or API without checking it
+
+### Where AI gets Flutter wrong
+
+- **Outdated APIs.** Flutter changes often, and AI suggestions may use deprecated widgets or old syntax. Check against the official docs.
+- **Packages that don't exist or have changed.** Confirm any package on [pub.dev](https://pub.dev) before adding it.
+- **Confident but wrong architecture.** AI will happily mix state management styles. Decide your structure first.
+
+### Tools to know
+
+- General assistants such as Claude, ChatGPT and Gemini for explanations and review.
+- IDE assistants inside VS Code or Android Studio for completion and quick questions.
+- The official Dart and Flutter MCP server, which lets compatible AI tools work with your project's analyzer and tests.
+
+Pick one assistant and learn it well. Switching tools every week is another form of procrastination.
+
+### Skills that matter more now
+
+When AI writes boilerplate in seconds, the valuable skills move elsewhere:
+
+- reading and judging code
+- designing app structure
+- debugging, and reading stack traces
+- testing
+- understanding what the user actually needs
+
+## Common mistakes when learning Flutter
+
+- **Tutorial hell.** Watching ten courses and building nothing. Build after every phase.
+- **Skipping Dart.** Widgets are much harder when the language is shaky.
+- **Learning every state management library.** Pick one and ship with it.
+- **Letting AI drive.** If you can't explain the code, you haven't learned it.
+- **Ignoring the release process.** Signing, permissions and store review are part of the job.
+- **Never reading the docs.** They are the one source that stays current.
+
+## Project ideas that teach the right things
+
+1. **Habit or to-do tracker.** State, local storage and forms.
+2. **Weather or news app.** REST API, JSON, loading and error states.
+3. **Shopping or booking app.** Lists, detail screens, cart state and authentication.
+4. **A clone of an app you use.** Layout and real-world polish.
+5. **A small app you actually publish.** The full path to the store.
+
+## Frequently asked questions
+
+<Faq q="How long does it take to learn Flutter?">
+
+About three months to build and ship a simple app at one to two hours a day. Becoming productive in a team takes longer. Prior programming experience shortens it a lot.
+
+</Faq>
+
+<Faq q="Do I need to learn Dart first?">
+
+Yes, briefly. One to two weeks on Dart fundamentals makes everything after it easier.
+
+</Faq>
+
+<Faq q="Can I learn Flutter with no coding experience?">
+
+Yes, but expect a slower start. Spend extra time on Dart basics and build small things often.
+
+</Faq>
+
+<Faq q="Is Flutter better than React Native?">
+
+Neither is better in every case. Flutter is strong for custom, branded UI from one codebase. React Native suits teams that already work in JavaScript or TypeScript. Compare them against your project, not a ranking.
+
+</Faq>
+
+<Faq q="Will AI replace Flutter developers?">
+
+AI is making routine code faster to write, not removing the need for people who can design, review, debug and ship. Developers who understand what the code does are in a better position than those who only prompt.
+
+</Faq>
+
+<Faq q="What should I learn after Flutter basics?">
+
+State management in depth, testing, app architecture, performance, CI/CD and one backend such as Firebase or NestJS.
+
+</Faq>
+
+## Final thoughts
+
+The best way to learn Flutter in 2027 is the same as it always was, with a better tutor available. Learn Dart, build real screens, pick one state management approach, ship an app, and use AI to explain, review and unblock you, not to do the thinking.
+
+Start today: install Flutter, run the counter app, and change one thing.
+
+## Related
+
+Want help scoping or building a Flutter app? See [Services](/#services) or [get in touch](/#contact). Before you publish your first app, read [the app-store rejection checklist](/outbox/app-store-rejection-checklist).

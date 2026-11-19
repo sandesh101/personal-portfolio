@@ -6,7 +6,7 @@ import { MiniFooter } from "@/components/Footers";
 import { mdxComponents } from "@/components/mdx";
 import { outlineLink, SimpleHeader } from "@/components/SimpleHeader";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { formatDate, getHeadings, getPost, getPosts } from "@/lib/outbox";
+import { formatDate, getHeadings, getPost, getPosts, getPublishedPosts } from "@/lib/outbox";
 import { EMAIL } from "@/lib/site";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -44,7 +44,7 @@ export default async function PostPage({ params }: Props) {
   const post = getPost((await params).slug);
   if (!post) notFound();
 
-  const all = getPosts();
+  const all = post.sample ? getPosts() : getPublishedPosts(); // real posts never link to samples
   const i = all.findIndex((p) => p.slug === post.slug);
   const newer = all[i - 1];
   const older = all[i + 1];

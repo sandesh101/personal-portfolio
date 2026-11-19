@@ -1,0 +1,67 @@
+---
+id: "#002"
+title: "Native or cross-platform? Six questions that decide it"
+channel: Flutter
+route: /notes/flutter
+date: "2026-10-14"
+excerpt: "Skip the framework debate. Six questions about the app, the team and the budget usually make the choice for you."
+sample: false
+---
+
+"Native or cross-platform?" is the first real decision on a mobile project, and most answers online are tribal. Picking a favourite framework first and justifying it later is how projects end up fighting their own stack.
+
+A better way is to answer the same questions every time and let the answers decide.
+
+## The options
+
+There are three realistic choices:
+
+- **Native**: Swift for iOS and Kotlin for Android, two codebases.
+- **Flutter**: one Dart codebase, with its own rendering engine.
+- **React Native**: one JavaScript or TypeScript codebase, using native UI components.
+
+Each is the right answer for some project. The trade-off is control against cost: native gives the most control over each platform, and a shared codebase gives the lowest cost to build and maintain.
+
+## The six questions
+
+**1. Does the app lean on platform-specific features?**
+Heavy use of home-screen widgets, HealthKit, ARKit, background Bluetooth or deep OS integration points towards native. Apps that are mostly forms, lists, maps, payments and notifications rarely need this.
+
+**2. How custom is the design?**
+A branded, animated UI is where Flutter is strong, because it draws every pixel itself and looks the same on both platforms. If the app must feel exactly like each platform's own controls, native wins.
+
+**3. How big is the team, and what does it already know?**
+One developer or a small team shipping to both platforms favours one codebase. A team of web developers who already know TypeScript may get further with React Native.
+
+**4. How fast does it need to ship, and what is the budget?**
+Two native apps mean two builds, two sets of bugs and two release cycles. One codebase usually reaches an MVP sooner and costs less to maintain. This matters most early on.
+
+**5. Will it need web or desktop later?**
+Flutter can target web and desktop from the same code. It is worth knowing even if the need is not there today.
+
+**6. How demanding is the hardest screen?**
+Startup time, app size and heavy animation are where problems tend to show up. Build a small prototype of the hardest screen before committing.
+
+## Common mistakes
+
+- **Choosing by habit or hype.** The stack should follow the app's needs.
+- **Assuming cross-platform means no platform work.** There are still two store releases, two sets of permissions and platform-specific bugs.
+- **Skipping the prototype.** The hardest screen shows the limits of a stack faster than any comparison article.
+- **Going native for a simple app.** Doubling the codebase for a form-and-list app is rarely worth it.
+
+## A simple way to decide
+
+- Mostly standard screens, custom branding, two platforms, small team: **Flutter**.
+- Deep platform features, or a platform-native feel is the product: **native**.
+- A TypeScript team with a web product to share code with: **React Native**.
+
+## Takeaways
+
+- Decide from the app's needs, the team and the budget, not from a favourite.
+- Prototype the hardest screen first.
+- Expect platform work either way, and plan for it.
+- If two options score about equal, take the one the team can maintain.
+
+## Related
+
+Scoping a mobile project and not sure which way to go? See [Services](/#services), or [get in touch](/#contact). Before shipping, read [the app-store rejection checklist](/outbox/app-store-rejection-checklist).

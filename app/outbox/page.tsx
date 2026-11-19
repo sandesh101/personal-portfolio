@@ -3,7 +3,6 @@ import Link from "next/link";
 import { MiniFooter } from "@/components/Footers";
 import { OutboxBrowser } from "@/components/OutboxBrowser";
 import { SimpleHeader } from "@/components/SimpleHeader";
-import { SubscribeForm } from "@/components/SubscribeForm";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { formatDate, getPosts, getPublishedPosts, hasPublishedPosts } from "@/lib/outbox";
 import { EMAIL, rssAlternates } from "@/lib/site";
@@ -94,7 +93,6 @@ export default function OutboxPage() {
                 and from teaching both. Every post is sent like a message, with
                 a subject, an ID and a route.
               </p>
-              <SubscribeForm />
             </div>
           </div>
         </section>

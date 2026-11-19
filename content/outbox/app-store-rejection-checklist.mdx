@@ -1,0 +1,87 @@
+---
+id: "#001"
+title: "The app-store rejection checklist for Flutter releases"
+channel: Tools
+route: /notes/tools
+date: "2026-09-24"
+excerpt: "Most rejections are not about bad apps. They come from a short list of things nobody mentions until review fails."
+sample: false
+---
+
+A release is ready, the build passes, and then the review fails. A day or a week is lost on a fix that took ten minutes. Apps are rarely rejected for being bad. They are rejected for missing something on a short checklist that nobody hands out.
+
+This is that checklist, in the order it is easiest to work through. Store rules change, so check each item against the current Apple and Google guidelines before submitting.
+
+## Why releases get rejected
+
+Reviewers check a fixed set of rules, and most rejections fall into a few groups:
+
+- Something the reviewer can't access, such as a login with no test account.
+- Something the app does that it doesn't declare, such as permissions, data collection or payments.
+- Something that looks unfinished: placeholder text, dead buttons, crashes.
+- Something specific to the build: wrong version number, missing permission in the release manifest.
+
+## Both stores
+
+- **Privacy policy URL.** It must be live, public and about this app. Both stores ask for it.
+- **Account deletion.** If users can create an account in the app, they must be able to delete it from inside the app. Google Play also asks for a web link for deletion requests.
+- **A working test account.** Give the reviewer a username and password with sample data in the review notes. A login wall with no demo account is one of the most common rejections.
+- **No placeholder content.** Lorem ipsum, "coming soon" buttons, empty screens and dead links all read as an unfinished app.
+- **Screenshots and description that match the build.** Don't show features the app doesn't have yet.
+- **Crash-free on a real device.** Test the release build, not just debug.
+
+## Apple App Store
+
+- **Permission strings.** Every permission the app or a plugin requests needs a clear reason in `Info.plist`. A missing or vague string gets the build rejected, sometimes before a human looks at it.
+
+```xml
+<key>NSCameraUsageDescription</key>
+<string>Used to scan the QR code on your receipt.</string>
+<key>NSPhotoLibraryUsageDescription</key>
+<string>Used to attach a photo to your listing.</string>
+```
+
+- **Sign in with Apple, or an equivalent.** Apps that offer third-party login such as Google or Facebook must check the current rule about providing a privacy-preserving option.
+- **In-app purchase for digital goods.** Selling digital content or features outside Apple's purchase system gets rejected. Physical goods and real-world services are treated differently.
+- **Privacy details and manifest.** Fill in the App Privacy section honestly, and check whether the plugins in use require a privacy manifest.
+- **Minimum functionality.** A thin wrapper around a website can be rejected. The app should do something a bookmark can't.
+
+## Google Play
+
+- **Data safety form.** Declare what data the app and each SDK collect. It has to match what the app actually does.
+- **Target API level.** Play requires new apps and updates to target a recent Android API level. Check the current requirement before building.
+- **Sensitive permissions.** SMS, call log, background location and all-files access need a declaration and a reason. Avoid them if the feature can work without.
+- **Testing requirement for new accounts.** New personal developer accounts must run a closed test with a minimum number of testers for a minimum number of days before production. Check the current numbers.
+- **App bundle.** Upload a signed `.aab`.
+
+## Flutter-specific traps
+
+- **Release builds need the INTERNET permission in the main manifest.** Debug builds get it automatically, so everything works in development and then the release build can't reach the network.
+
+```xml
+<!-- android/app/src/main/AndroidManifest.xml -->
+<uses-permission android:name="android.permission.INTERNET"/>
+```
+
+- **Plugin permissions.** Packages like `image_picker`, `geolocator` and `permission_handler` each need their own `Info.plist` keys and manifest entries. Each package's setup page lists them.
+- **Version and build number.** Bump both in `pubspec.yaml` (`1.2.0+14`). Stores reject a build number they have already seen.
+- **Test the exact artifact you upload.** Build with `flutter build appbundle --release` and `flutter build ipa`, then install and use it on a real phone.
+
+## The short version to save
+
+1. Privacy policy live, account deletion in the app, test account in the review notes.
+2. Permission strings and the data safety or privacy forms match what the app does.
+3. No placeholder content, and screenshots from this build.
+4. Version and build number bumped.
+5. Release build installed and used on a real device.
+
+## Takeaways
+
+- Treat the checklist as part of the build, not an afterthought.
+- Write review notes as if the reviewer has never seen the app, because they haven't.
+- Most fixes are small. The cost of a rejection is the wait, not the work.
+- Run the checklist before the first upload, not after the first rejection.
+
+## Related
+
+Shipping a Flutter app to both stores and want a second pair of eyes? [Get in touch](/#contact). Also in the Outbox: [native or cross-platform, and how to decide](/outbox/native-or-cross-platform).
