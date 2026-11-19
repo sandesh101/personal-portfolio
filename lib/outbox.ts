@@ -13,6 +13,8 @@ export type PostMeta = {
   date: string;
   excerpt: string;
   minutes: number;
+  /** Optional share image, e.g. /outbox/my-post.png in public/. Falls back to the site image. */
+  image?: string;
   /** Layout sample, not a real post. Kept out of the feed and the sitemap. */
   sample: boolean;
 };
@@ -51,6 +53,7 @@ function parse(file: string): Post {
     date: String(data.date),
     excerpt: String(data.excerpt),
     minutes: Math.max(1, Math.round(words / 200)),
+    image: data.image ? String(data.image) : undefined,
     sample: data.sample === true,
     content,
   };

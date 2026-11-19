@@ -3,6 +3,7 @@ import Link from "next/link";
 import { MiniFooter } from "@/components/Footers";
 import { outlineLink, SimpleHeader } from "@/components/SimpleHeader";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { getPost } from "@/lib/outbox";
 import { CASE_STUDY_LIVE, CASE_STUDY_PATH, EMAIL, ext, LINKS, SERVICES_PATH } from "@/lib/site";
 
 const title = "Mobile app development in Nepal";
@@ -80,6 +81,11 @@ const faqSchema = {
     acceptedAnswer: { "@type": "Answer", text: f.a },
   })),
 };
+
+// Posts that back up this page. Only real (non-sample) posts are linked.
+const READING = ["native-or-cross-platform", "app-store-rejection-checklist"]
+  .map(getPost)
+  .filter((p) => p && !p.sample);
 
 export default function MobileAppDevelopmentNepal() {
   return (
@@ -173,6 +179,24 @@ export default function MobileAppDevelopmentNepal() {
             </ol>
           </div>
         </section>
+
+        {READING.length > 0 && (
+          <section className="border-t border-line py-[clamp(48px,7vw,96px)]">
+            <div className="wrap">
+              <h2 className="mono-label">Before you hire, read</h2>
+              <ul className="mt-6 max-w-[680px] border-t border-ink">
+                {READING.map((r) => (
+                  <li key={r!.slug} className="border-b border-line">
+                    <Link href={`/outbox/${r!.slug}`} className="block py-5">
+                      <span className="block text-[18px] font-medium">{r!.title}</span>
+                      <span className="mt-1 block text-[15px] text-muted">{r!.excerpt}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
+        )}
 
         <section
           aria-labelledby="faq-h"

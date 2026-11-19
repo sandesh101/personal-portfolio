@@ -21,6 +21,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = getPost((await params).slug);
   if (!post) return {};
   const url = `/outbox/${post.slug}`;
+  const image = post.image ?? "/opengraph-image.png";
   return {
     title: post.title,
     description: post.excerpt,
@@ -33,6 +34,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: post.title,
       description: post.excerpt,
       publishedTime: post.date,
+      images: [image],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.excerpt,
+      images: [image],
     },
   };
 }
@@ -65,7 +73,7 @@ export default async function PostPage({ params }: Props) {
         dateModified: post.date,
         articleSection: post.channel,
         inLanguage: "en",
-        image: `${SITE_URL}/opengraph-image.png`,
+        image: `${SITE_URL}${post.image ?? "/opengraph-image.png"}`,
         author: { "@id": `${SITE_URL}/#person` },
         publisher: { "@id": `${SITE_URL}/#person` },
       },
