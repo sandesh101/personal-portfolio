@@ -23,14 +23,13 @@ export const LINKS = {
 
 export type NavItem = { num: string; label: string; href: string };
 
-/** Section links, numbered in page order. The Outbox appears once it has a real post. */
-export function navItems(outbox: boolean): NavItem[] {
+/** Section links, numbered in page order. */
+export function navItems(): NavItem[] {
   const items = [
     ["Work", "#work"],
     ["Services", "#services"],
     ["Stack", "#stack"],
     ["About", "#about"],
-    ...(outbox ? [["Outbox", "#outbox"]] : []),
     ["Contact", "#contact"],
   ];
   return items.map(([label, href], i) => ({
