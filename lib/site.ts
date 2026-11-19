@@ -2,9 +2,9 @@ export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://sandeshrimal.com.np";
 
 export const SITE_TITLE =
-  "Full-stack Flutter developer in Kathmandu, Nepal — Sandesh Rimal";
+  "Sandesh Rimal | Flutter Developer in Nepal";
 export const SITE_DESCRIPTION =
-  "Full-stack Flutter developer in Kathmandu, Nepal. I build Android and iOS apps with Flutter and the NestJS backends behind them, from first screen to production.";
+  "Flutter developer in Kathmandu, Nepal. I build Android and iOS apps with Flutter and NestJS backends, from idea to launch. Available for freelance projects.";
 export const SERVICES_PATH = "/services/mobile-app-development-nepal";
 
 export const EMAIL = "rimal.sandesh11@gmail.com";
