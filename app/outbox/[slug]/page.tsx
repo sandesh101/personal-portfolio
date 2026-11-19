@@ -6,8 +6,8 @@ import { MiniFooter } from "@/components/Footers";
 import { mdxComponents } from "@/components/mdx";
 import { outlineLink, SimpleHeader } from "@/components/SimpleHeader";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { formatDate, getHeadings, getPost, getPosts } from "@/lib/outbox";
-import { EMAIL } from "@/lib/site";
+import { formatDate, getFaqs, getHeadings, getPost, getPosts, getPublishedPosts } from "@/lib/outbox";
+import { EMAIL, SITE_URL } from "@/lib/site";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -21,6 +21,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = getPost((await params).slug);
   if (!post) return {};
   const url = `/outbox/${post.slug}`;
+  const image = post.image ?? "/opengraph-image.png";
   return {
     title: post.title,
     description: post.excerpt,
@@ -33,6 +34,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: post.title,
       description: post.excerpt,
       publishedTime: post.date,
+      images: [image],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.excerpt,
+      images: [image],
     },
   };
 }
@@ -44,11 +52,45 @@ export default async function PostPage({ params }: Props) {
   const post = getPost((await params).slug);
   if (!post) notFound();
 
-  const all = getPosts();
+  const all = post.sample ? getPosts() : getPublishedPosts(); // real posts never link to samples
   const i = all.findIndex((p) => p.slug === post.slug);
   const newer = all[i - 1];
   const older = all[i + 1];
   const headings = getHeadings(post.content);
+  const url = `${SITE_URL}/outbox/${post.slug}`;
+  const faqs = getFaqs(post.content);
+  const schema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BlogPosting",
+        "@id": `${url}#post`,
+        headline: post.title,
+        description: post.excerpt,
+        url,
+        mainEntityOfPage: url,
+        datePublished: post.date,
+        dateModified: post.date,
+        articleSection: post.channel,
+        inLanguage: "en",
+        image: `${SITE_URL}${post.image ?? "/opengraph-image.png"}`,
+        author: { "@id": `${SITE_URL}/#person` },
+        publisher: { "@id": `${SITE_URL}/#person` },
+      },
+      ...(faqs.length
+        ? [
+            {
+              "@type": "FAQPage",
+              mainEntity: faqs.map((f) => ({
+                "@type": "Question",
+                name: f.q,
+                acceptedAnswer: { "@type": "Answer", text: f.a },
+              })),
+            },
+          ]
+        : []),
+    ],
+  };
   const reply = `mailto:${EMAIL}?subject=${encodeURIComponent(`Re: ${post.title}`)}`;
 
   return (
@@ -186,6 +228,14 @@ export default async function PostPage({ params }: Props) {
       </main>
 
       <MiniFooter links={[{ label: "RSS", href: "/outbox/rss.xml" }]} />
+      {!post.sample && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(schema).replace(/</g, "\\u003c"),
+          }}
+        />
+      )}
     </>
   );
 }

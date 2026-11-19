@@ -44,11 +44,11 @@ export const generateMetadata = (): Metadata => ({
 export default function Home() {
   // The Outbox section and its nav link appear once there is a real (non-sample) post.
   const outbox = hasPublishedPosts();
-  const nav = navItems(outbox);
+  const nav = navItems();
   return (
     <>
       <StatusBar />
-      <HomeHeader nav={nav} />
+      <HomeHeader nav={nav} outbox={outbox} />
       <main id="main">
         <PageAnimations />
         <Hero />

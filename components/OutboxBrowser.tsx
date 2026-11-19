@@ -16,8 +16,6 @@ export type OutboxItem = {
   meta: string;
 };
 
-const FILTERS = ["All", ...CHANNELS] as const;
-
 export function OutboxBrowser({
   posts,
   note,
@@ -25,18 +23,25 @@ export function OutboxBrowser({
   posts: OutboxItem[];
   note?: string;
 }) {
-  const [filter, setFilter] = useState<(typeof FILTERS)[number]>("All");
+  // Only channels that have a post. A filter with one channel or none would be noise.
+  const channels = CHANNELS.filter((c) => posts.some((p) => p.channel === c));
+  const filters = ["All", ...channels];
+  const [filter, setFilter] = useState("All");
   const shown = posts.filter((p) => filter === "All" || p.channel === filter);
 
   return (
     <>
       <div className="mb-4 flex flex-wrap items-center justify-between gap-4">
-        <Segmented
-          options={FILTERS}
-          value={filter}
-          onChange={setFilter}
-          label="Filter by channel"
-        />
+        {channels.length > 1 ? (
+          <Segmented
+            options={filters}
+            value={filter}
+            onChange={setFilter}
+            label="Filter by channel"
+          />
+        ) : (
+          <span />
+        )}
         <p className="font-mono text-xs text-muted" aria-live="polite">
           {shown.length} {shown.length === 1 ? "message" : "messages"} · newest
           first

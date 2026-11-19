@@ -1,0 +1,86 @@
+---
+id: "#004"
+title: "How a flash sale takes 1 lakh taps and still doesn't oversell"
+channel: NestJS
+route: /notes/nestjs
+date: "2026-11-19"
+excerpt: "100 phones, 1 lakh taps at 12:00:00. An atomic Redis gate, a queue and idempotent orders keep the stock honest."
+sample: true
+---
+
+{/* Review, then set sample: false. */}
+
+100 phones are in stock. At 12:00:00, 1 lakh people tap Buy. The app must not crash, and it must never sell phone #101.
+
+This is a general pattern for handling that moment, not a description of how any particular company runs its sale.
+
+## Why the obvious version oversells
+
+The first version most people write reads the stock, checks it, then writes it back:
+
+```ts
+const item = await this.items.findOne(id);
+if (item.stock > 0) {
+  item.stock -= 1;
+  await this.items.save(item);
+}
+```
+
+Two requests can read `stock = 1` at the same moment. Both pass the check, both decrement, and one phone is sold twice. With 1 lakh requests in the same second, this stops being a rare bug and becomes the normal case.
+
+## Options and trade-offs
+
+- **Lock the row in the database** (`SELECT ... FOR UPDATE`). Always correct, but every buyer waits in line on one row, so the database becomes the bottleneck.
+- **Atomic counter in Redis.** One operation checks and decrements in memory. It is fast and can't race.
+- **Queue every request and process one at a time.** Safe, but buyers wait and get no instant answer.
+
+The usual answer combines them: an atomic Redis gate in front, a queue behind it, and the database as the source of truth.
+
+## The gate: one atomic step in Redis
+
+A Lua script runs as a single step inside Redis, so nothing can slip in between the check and the decrement. It also remembers who already bought.
+
+```ts
+const BUY = `
+  if redis.call('SISMEMBER', KEYS[2], ARGV[1]) == 1 then return -1 end
+  local stock = tonumber(redis.call('GET', KEYS[1]) or '0')
+  if stock <= 0 then return 0 end
+  redis.call('DECR', KEYS[1])
+  redis.call('SADD', KEYS[2], ARGV[1])
+  return 1
+`;
+
+async tryReserve(itemId: string, userId: string) {
+  const r = await this.redis.eval(
+    BUY, 2, `stock:${itemId}`, `buyers:${itemId}`, userId,
+  );
+  return r === 1 ? 'reserved' : r === -1 ? 'already' : 'sold_out';
+}
+```
+
+Only the 100 requests that get `reserved` go any further. The other 99,900 get "sold out" straight from memory and never touch the database.
+
+## After the gate
+
+- **Queue the order.** Reserved buyers go onto a queue (BullMQ in NestJS) and a worker writes the order to the database at a pace it can handle.
+- **Make the order idempotent.** Use the user and item as the key, so a retried tap or a retried job can't create two orders.
+- **Expire unpaid holds.** If a buyer reserves and never pays, return the stock after a few minutes.
+- **Reconcile.** The database is the source of truth. A small job compares it with Redis and corrects any drift.
+
+## Common mistakes
+
+- Checking stock and decrementing in two separate steps.
+- Sending every request to the database instead of rejecting most of them early.
+- Forgetting that retries happen, so the same order is created twice.
+- Never returning stock from abandoned reservations.
+
+## Takeaways
+
+- Check-then-write is the bug. Make the check and the decrement one atomic step.
+- Keep the hot path off the database. Most requests only need to hear "sold out".
+- Every write needs an idempotency key, because retries are normal in a sale.
+- Load test with a burst before the real event, not after.
+
+## Related
+
+Planning a launch, a sale or a booking flow that has to hold up under load? [Get in touch](/#contact). Also in the Outbox: [native or cross-platform](/outbox/native-or-cross-platform).

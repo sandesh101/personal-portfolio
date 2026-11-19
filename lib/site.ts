@@ -2,9 +2,9 @@ export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://sandeshrimal.com.np";
 
 export const SITE_TITLE =
-  "Sandesh Rimal — Flutter & mobile app developer in Kathmandu, Nepal";
+  "Full-stack Flutter developer in Kathmandu, Nepal — Sandesh Rimal";
 export const SITE_DESCRIPTION =
-  "Flutter developer and backend engineer in Kathmandu, Nepal. I build mobile apps and the NestJS servers behind them, from first screen to production.";
+  "Full-stack Flutter developer in Kathmandu, Nepal. I build Android and iOS apps with Flutter and the NestJS backends behind them, from first screen to production.";
 export const SERVICES_PATH = "/services/mobile-app-development-nepal";
 
 export const EMAIL = "rimal.sandesh11@gmail.com";
@@ -12,6 +12,7 @@ export const EMAIL = "rimal.sandesh11@gmail.com";
 export const LINKS = {
   github: "https://github.com/sandesh101",
   linkedin: "https://www.linkedin.com/in/sandesh-rimal/",
+  tiktok: "https://www.tiktok.com/@sandesh.apk",
   chynabazarPlay:
     "https://play.google.com/store/apps/details?id=com.chinabazar.app",
   liarsGridPlay:
@@ -23,14 +24,13 @@ export const LINKS = {
 
 export type NavItem = { num: string; label: string; href: string };
 
-/** Section links, numbered in page order. The Outbox appears once it has a real post. */
-export function navItems(outbox: boolean): NavItem[] {
+/** Section links, numbered in page order. */
+export function navItems(): NavItem[] {
   const items = [
     ["Work", "#work"],
     ["Services", "#services"],
     ["Stack", "#stack"],
     ["About", "#about"],
-    ...(outbox ? [["Outbox", "#outbox"]] : []),
     ["Contact", "#contact"],
   ];
   return items.map(([label, href], i) => ({

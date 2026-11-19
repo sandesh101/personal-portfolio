@@ -13,6 +13,8 @@ export type PostMeta = {
   date: string;
   excerpt: string;
   minutes: number;
+  /** Optional share image, e.g. /outbox/my-post.png in public/. Falls back to the site image. */
+  image?: string;
   /** Layout sample, not a real post. Kept out of the feed and the sitemap. */
   sample: boolean;
 };
@@ -51,6 +53,7 @@ function parse(file: string): Post {
     date: String(data.date),
     excerpt: String(data.excerpt),
     minutes: Math.max(1, Math.round(words / 200)),
+    image: data.image ? String(data.image) : undefined,
     sample: data.sample === true,
     content,
   };
@@ -96,4 +99,13 @@ export function getHeadings(content: string) {
     if (m) out.push({ id: slugify(m[1]), text: m[1] });
   }
   return out;
+}
+
+/** Question/answer pairs from <Faq q="..."> blocks, as plain text for FAQPage schema. */
+export function getFaqs(content: string) {
+  const plain = (s: string) =>
+    s.replace(/\[([^\]]+)\]\([^)]*\)/g, "$1").replace(/[*`]/g, "").replace(/\s+/g, " ").trim();
+  return [...content.matchAll(/<Faq q="([^"]+)">\s*([\s\S]*?)\s*<\/Faq>/g)].map(
+    (m) => ({ q: m[1], a: plain(m[2]) }),
+  );
 }

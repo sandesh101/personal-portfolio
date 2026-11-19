@@ -39,10 +39,29 @@ function Lifecycle() {
   );
 }
 
+/** One collapsible FAQ item. Native <details>: no JS, and the answer stays in the HTML for search engines. */
+function Faq({ q, children }: { q: string; children: ReactNode }) {
+  return (
+    <details className="group border-b border-line first-of-type:border-t">
+      <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 py-4 font-medium [&::-webkit-details-marker]:hidden">
+        {q}
+        <span
+          aria-hidden="true"
+          className="font-mono text-lg text-muted transition-transform duration-200 group-open:rotate-45"
+        >
+          +
+        </span>
+      </summary>
+      <div className="pb-4 text-muted">{children}</div>
+    </details>
+  );
+}
+
 export const mdxComponents = {
   // Same slug as lib/outbox getHeadings, so the table of contents links line up.
   h2: ({ children }: { children?: ReactNode }) => (
     <h2 id={slugify(textOf(children))}>{children}</h2>
   ),
   Lifecycle,
+  Faq,
 };

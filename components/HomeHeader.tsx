@@ -7,7 +7,7 @@ import { EMAIL, ext, LINKS, type NavItem } from "@/lib/site";
 import { Brand } from "./Brand";
 import { ThemeToggle } from "./ThemeToggle";
 
-export function HomeHeader({ nav }: { nav: NavItem[] }) {
+export function HomeHeader({ nav, outbox }: { nav: NavItem[]; outbox: boolean }) {
   const [open, setOpen] = useState(false);
   const menuBtn = useRef<HTMLButtonElement>(null);
   const closeBtn = useRef<HTMLButtonElement>(null);
@@ -52,13 +52,14 @@ export function HomeHeader({ nav }: { nav: NavItem[] }) {
                 {n.label}
               </a>
             ))}
-            <a
-              href={LINKS.github}
-              {...ext(LINKS.github)}
-              className="inline-flex min-h-11 items-center px-3 text-sm"
-            >
-              GitHub ↗
-            </a>
+            {outbox && (
+              <Link
+                href="/outbox"
+                className="inline-flex min-h-11 items-center px-3 text-sm"
+              >
+                Outbox
+              </Link>
+            )}
             <a
               href={LINKS.resume}
               {...ext(LINKS.resume)}
@@ -135,13 +136,11 @@ export function HomeHeader({ nav }: { nav: NavItem[] }) {
           >
             {EMAIL}
           </a>
-          <a
-            href={LINKS.github}
-            {...ext(LINKS.github)}
-            className="inline-flex min-h-11 items-center"
-          >
-            GitHub ↗
-          </a>
+          {outbox && (
+            <Link href="/outbox" className="inline-flex min-h-11 items-center">
+              Outbox
+            </Link>
+          )}
           <Link
             href={LINKS.resume}
             {...ext(LINKS.resume)}
