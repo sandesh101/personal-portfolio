@@ -8,7 +8,7 @@ import { formatDate, getPosts, getPublishedPosts, hasPublishedPosts } from "@/li
 import { EMAIL, rssAlternates } from "@/lib/site";
 
 const description =
-  "Things I've learned building Flutter apps and NestJS APIs, and from teaching both. Every post is sent like a message.";
+  "Guides and notes on building Flutter apps and NestJS APIs, and on learning both. Every post is sent like a message.";
 
 export const generateMetadata = (): Metadata => ({
   title: "Outbox",
@@ -89,9 +89,9 @@ export default function OutboxPage() {
             </div>
             <div className="mt-[clamp(20px,3vw,36px)] flex flex-wrap gap-x-[clamp(32px,6vw,96px)] gap-y-7 border-t border-ink pt-6">
               <p className="min-w-0 flex-[1.4_1_440px] text-[clamp(18px,1.6vw,21px)] leading-[1.5]">
-                Things I&apos;ve learned building Flutter apps and NestJS APIs,
-                and from teaching both. Every post is sent like a message, with
-                a subject, an ID and a route.
+                Guides and notes on building Flutter apps and NestJS APIs, and on
+                learning both. Every post is sent like a message, with a
+                subject, an ID and a route.
               </p>
             </div>
           </div>
