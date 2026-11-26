@@ -1,0 +1,145 @@
+---
+id: "#005"
+title: "Server-Driven UI in Flutter: what it is and how Chynabazar uses it"
+channel: Flutter
+route: /notes/flutter
+date: "2026-11-26"
+excerpt: "What server-driven UI (SDUI) is, when it is worth it, and how Chynabazar uses it to change its homepage on web and mobile without an app release."
+sample: false
+---
+
+{/* Review, then set sample: false. */}
+
+A sale starts on Friday. The homepage needs a new banner, a campaign row near the top and one section hidden. On the web that is a quick deploy. In a mobile app it can mean a new build, a store review and then waiting for people to update.
+
+Server-driven UI is a way around that wait. This post explains the idea, then shows how Chynabazar, an e-commerce platform with a web storefront and a Flutter app, applies it.
+
+## What is server-driven UI?
+
+In a typical app, the screen layout is written into the app. The server sends data, and the app decides where it goes.
+
+In **server-driven UI (SDUI)**, the server also decides which sections appear, in what order and with what content. The response looks like a list of blocks:
+
+```json
+{
+  "blocks": [
+    { "type": "promo_banner", "order": 1, "data": { "title": "Friday sale" } },
+    { "type": "category_circles", "order": 2, "data": {} },
+    { "type": "product_feed", "order": 3, "data": { "title": "New arrivals" } }
+  ]
+}
+```
+
+The app does not download code. It already contains a native widget for each block type, and it picks the widget that matches `type`.
+
+## When is SDUI worth it?
+
+It fits screens that change often and are built from repeating sections:
+
+- homepages and landing pages
+- campaign and seasonal pages
+- content pages managed by a non-developer
+
+It is usually not worth it for screens with fixed, complex behaviour, such as sign-in, forms or a settings page. There the layout rarely changes, and SDUI only adds indirection.
+
+## How Chynabazar implemented it
+
+Chynabazar uses SDUI mainly for the **homepage and CMS pages**. The server decides what appears, and web and mobile each draw it with their own native components.
+
+### 1. Authoring: a block builder in the dashboard
+
+An admin builds a page in the dashboard by adding and arranging blocks. No developer is needed for a new layout made from existing block types.
+
+### 2. Storage: versioned pages
+
+Each page has numbered versions. A version holds the block list as JSON, has a draft or published status and can be scheduled. This allows previewing a draft and preparing a campaign page ahead of time.
+
+### 3. Validation: one schema per block type
+
+Every block type has its own Zod schema in the NestJS backend, chosen by the block's `type`. A block with a missing or wrong field is rejected before it can reach a client.
+
+### 4. Serving: ordered, filtered and filled with live data
+
+When a client asks for a page, the backend:
+
+1. sorts the blocks by `order`
+2. drops hidden blocks, except in preview
+3. attaches live product, campaign and video data to the blocks that need it
+
+The stored page says "show these products here". The current product details are added at request time.
+
+### 5. Rendering: each client switches on the type
+
+The web storefront and the Flutter app both go through the list and render the component that matches each `type`. A simplified Flutter version of the idea looks like this:
+
+```dart
+Widget buildBlock(Block block) {
+  return switch (block.type) {
+    'promo_banner' => PromoBanner(block.data),
+    'category_circles' => CategoryCircles(block.data),
+    'product_feed' => ProductFeed(block.data),
+    _ => const SizedBox.shrink(), // unknown type: show nothing
+  };
+}
+```
+
+The last line matters. An older version of the app that meets a new block type skips it instead of crashing.
+
+The same page does not have to look identical everywhere. Some blocks are shown only at certain screen sizes or on one platform, and each client decides that for itself.
+
+## What can change without an app release
+
+**No release needed:**
+
+- block order and visibility
+- titles, banners and links
+- which products are shown
+- scheduled versions and draft previews
+
+**Release needed:**
+
+- a new block type, which takes a backend schema plus code in both clients
+- a new look or behaviour for an existing block
+
+SDUI does not remove releases. It removes them for changes that are only content and arrangement.
+
+Chynabazar uses a smaller version of the same idea at checkout: the mobile app takes the enabled payment methods, and their order, from settings on the server.
+
+## Common mistakes
+
+- **Accepting a type no client can draw.** If the backend validates a block that has no renderer, an admin can add it and nothing appears. Keep the schema list and the renderers in step.
+- **Forgetting old app versions.** People do not update at once. Unknown types and extra fields must never crash the app.
+- **Making everything server-driven.** Start with the screens that change every week.
+- **Skipping validation.** One malformed block should not break the whole page.
+- **No preview or fallback.** Editors need to see a draft before it goes live, and the app needs something to show if a page cannot be loaded.
+
+## Takeaways
+
+- SDUI sends a description of the screen. The app still renders its own native widgets.
+- It pays off on screens that change often, such as a shop's homepage.
+- Validate on the server and ignore unknown types on the client.
+- Version the pages, so changes can be previewed, scheduled and rolled back.
+
+## Frequently asked questions
+
+<Faq q="Is server-driven UI the same as a WebView?">
+
+No. A WebView shows a web page inside the app. In server-driven UI the server sends data describing the blocks, and the app renders them with its own native widgets.
+
+</Faq>
+
+<Faq q="Does SDUI mean no more app updates?">
+
+No. Content and arrangement can change from the server. A new block type or new behaviour still needs a release.
+
+</Faq>
+
+<Faq q="Can Flutter be used for server-driven UI?">
+
+Yes. Parse the response into block models and map each type to a widget. Unknown types should render as nothing.
+
+</Faq>
+
+## Related
+
+Read the [Chynabazar case study](/work/chynabazar). Planning an app whose homepage needs to change without a release? See [Services](/#services) or [get in touch](/#contact).

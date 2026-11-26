@@ -6,6 +6,7 @@ import { MiniFooter } from "@/components/Footers";
 import { mdxComponents } from "@/components/mdx";
 import { outlineLink, SimpleHeader } from "@/components/SimpleHeader";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { Toc } from "@/components/Toc";
 import { formatDate, getFaqs, getHeadings, getPost, getPosts, getPublishedPosts } from "@/lib/outbox";
 import { EMAIL, SITE_URL } from "@/lib/site";
 
@@ -147,15 +148,7 @@ export default async function PostPage({ params }: Props) {
                   <p className="mono-label mb-2 !text-[11px]">
                     In this message
                   </p>
-                  <ol className="border-t border-line">
-                    {headings.map((h) => (
-                      <li key={h.id} className="border-b border-line">
-                        <a href={`#${h.id}`} className="block py-2.5">
-                          {h.text}
-                        </a>
-                      </li>
-                    ))}
-                  </ol>
+                  <Toc headings={headings} />
                 </nav>
               )}
 
